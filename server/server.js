@@ -85,10 +85,16 @@ app.use((err, req, res, next) => {
 
 const PORT = process.env.PORT || 5000;
 
-server.listen(PORT, () => {
-  console.log(`=========================================`);
-  console.log(`🚀 Al-Barakah Society Server running on port ${PORT}`);
-  console.log(`🌿 Branding: আল-বারাকাহ সোসাইটি (বিশ্বাসের বন্ধন)`);
-  console.log(`📡 Realtime Socket.io initialized`);
-  console.log(`=========================================`);
-});
+if (!process.env.VERCEL) {
+  server.listen(PORT, () => {
+    console.log(`=========================================`);
+    console.log(`🚀 Al-Barakah Society Server running on port ${PORT}`);
+    console.log(`🌿 Branding: আল-বারাকাহ সোসাইটি (বিশ্বাসের বন্ধন)`);
+    console.log(`📡 Realtime Socket.io initialized`);
+    console.log(`=========================================`);
+  });
+}
+
+module.exports = app;
+module.exports.server = server;
+

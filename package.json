@@ -1,0 +1,22 @@
+{
+  "name": "al-barakah-society",
+  "version": "1.0.0",
+  "description": "Al-Barakah Society (আল-বারাকাহ সোসাইটি) - বিশ্বাসের বন্ধন: Production-ready Community Ledger & Communication Web Application",
+  "scripts": {
+    "build": "npm run build --prefix client",
+    "server": "npm run start --prefix server",
+    "server:dev": "npm run dev --prefix server",
+    "client": "npm run dev --prefix client",
+    "client:build": "npm run build --prefix client",
+    "seed": "npm run seed --prefix server"
+  },
+  "keywords": [
+    "islamic-society",
+    "ledger",
+    "community",
+    "mern",
+    "socketio"
+  ],
+  "author": "Al-Barakah Society",
+  "license": "ISC"
+}

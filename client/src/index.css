@@ -1,0 +1,131 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    background-color: #f8fafc;
+    color: #0f172a;
+    font-family: 'Hind Siliguri', 'Inter', system-ui, -apple-system, sans-serif;
+  }
+}
+
+/* Custom scrollbars */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #f1f5f9;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+
+/* User Design Constraints: All cards must have 6px border-radius and NO box-shadow */
+.app-card,
+.stat-card,
+[class*="shadow-card"],
+[class*="shadow-lg"],
+[class*="shadow-xl"],
+[class*="shadow-2xl"],
+[class*="shadow-md"] {
+  box-shadow: none !important;
+}
+
+/* All profile pictures must be completely round (100% circular) */
+.profile-avatar,
+img[alt*="avatar"],
+img[alt*="Profile"],
+img[alt*="profile"],
+img[alt*="সদস্য"],
+img[alt*="ব্যবহারকারী"] {
+  border-radius: 9999px !important;
+  aspect-ratio: 1 / 1 !important;
+  object-fit: cover !important;
+}
+
+/* Logo White Filter */
+.logo-white {
+  filter: brightness(0) invert(1) !important;
+}
+
+/* AOS (Smooth Animation On Open / Smooth Modal Vibe) */
+@keyframes aos-modal-pop {
+  0% {
+    opacity: 0;
+    transform: scale(0.93) translateY(14px);
+  }
+  60% {
+    opacity: 1;
+    transform: scale(1.008) translateY(-2px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+
+@keyframes aos-backdrop-fade {
+  0% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
+  }
+  100% {
+    opacity: 1;
+    backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes aos-card-fade-up {
+  0% {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.aos-modal-backdrop {
+  animation: aos-backdrop-fade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.aos-modal-content {
+  animation: aos-modal-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+}
+
+.aos-card-item {
+  animation: aos-card-fade-up 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+
+/* Print specific styles for Receipts */
+@media print {
+  body * {
+    visibility: hidden;
+  }
+  #printable-receipt, #printable-receipt * {
+    visibility: visible;
+  }
+  #printable-receipt {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    margin: 0;
+    padding: 20px;
+    box-shadow: none !important;
+    border: 1px solid #ddd !important;
+  }
+  .no-print {
+    display: none !important;
+  }
+}

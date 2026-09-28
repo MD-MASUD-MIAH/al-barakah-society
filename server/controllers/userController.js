@@ -291,16 +291,39 @@ exports.updateProfile = async (req, res) => {
 exports.applyMembership = async (req, res) => {
   try {
     const {
+      formNo,
+      admissionDate,
+      name,
+      phone,
+      avatar,
       nid,
       fatherOrHusbandName,
-      currentAddress,
-      permanentAddress,
+      motherName,
+      dob,
+      nationality,
+      religion,
       occupation,
-      monthlyPledge,
+      permanentVillage,
+      permanentPost,
+      permanentUpazila,
+      permanentDistrict,
+      permanentAddress,
+      currentAddress,
+      gender,
+      maritalStatus,
+      education,
+      email,
+      bloodGroup,
       nomineeName,
+      nomineeFatherName,
+      nomineeUpazila,
+      nomineeDistrict,
       nomineeRelation,
       nomineePhone,
+      nomineeNid,
+      monthlyPledge,
       joinReason,
+      applicantSignature,
     } = req.body;
 
     const user = await User.findById(req.user._id);
@@ -318,18 +341,48 @@ exports.applyMembership = async (req, res) => {
       });
     }
 
+    // Update user basic profile if provided
+    if (name && name.trim()) user.name = name.trim();
+    if (phone && phone.trim()) user.phone = phone.trim();
+    if (avatar && avatar.trim()) user.avatar = avatar.trim();
+
     user.status = 'pending';
     user.membershipDetails = {
+      formNo: formNo || `ABS-${Date.now().toString().slice(-6)}`,
+      admissionDate: admissionDate || new Date().toISOString().split('T')[0],
       nid: nid || '',
       fatherOrHusbandName: fatherOrHusbandName || '',
-      currentAddress: currentAddress || '',
-      permanentAddress: permanentAddress || '',
+      motherName: motherName || '',
+      dob: dob || '',
+      nationality: nationality || 'বাংলাদেশী',
+      religion: religion || 'ইসলাম',
       occupation: occupation || '',
-      monthlyPledge: Number(monthlyPledge) || 0,
+      permanentVillage: permanentVillage || '',
+      permanentPost: permanentPost || '',
+      permanentUpazila: permanentUpazila || '',
+      permanentDistrict: permanentDistrict || '',
+      permanentAddress:
+        permanentAddress ||
+        (permanentVillage
+          ? `গ্রাম: ${permanentVillage}, ডাকঘর: ${permanentPost || ''}, উপজেলা: ${permanentUpazila || ''}, জেলা: ${permanentDistrict || ''}`
+          : ''),
+      currentAddress: currentAddress || '',
+      gender: gender || '',
+      maritalStatus: maritalStatus || '',
+      education: education || '',
+      email: email || user.email || '',
+      phone: phone || user.phone || '',
+      bloodGroup: bloodGroup || '',
       nomineeName: nomineeName || '',
+      nomineeFatherName: nomineeFatherName || '',
+      nomineeUpazila: nomineeUpazila || '',
+      nomineeDistrict: nomineeDistrict || '',
       nomineeRelation: nomineeRelation || '',
       nomineePhone: nomineePhone || '',
+      nomineeNid: nomineeNid || '',
+      monthlyPledge: Number(monthlyPledge) || 0,
       joinReason: joinReason || '',
+      applicantSignature: applicantSignature || user.name,
       appliedAt: new Date(),
     };
 

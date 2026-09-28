@@ -74,6 +74,14 @@ export const PendingApproval = () => {
           </button>
 
           <button
+            onClick={() => navigate('/apply-membership')}
+            className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 border border-emerald-300 font-semibold text-xs rounded-[6px] transition-all"
+          >
+            <Sparkles className="w-4 h-4 text-emerald-800" />
+            <span>সদস্য ভর্তি ফরম দেখুন / প্রিন্ট করুন</span>
+          </button>
+
+          <button
             onClick={handleLogout}
             className="w-full flex items-center justify-center gap-2 py-2.5 px-4 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-xs rounded-[6px] transition-all"
           >

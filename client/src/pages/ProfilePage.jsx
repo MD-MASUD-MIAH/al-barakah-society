@@ -16,6 +16,7 @@ import { useAuth } from '../context/AuthContext';
 import { showSuccessAlert, showErrorAlert } from '../utils/alerts';
 import { formatCurrency, formatDate, getPaymentMethodInfo } from '../utils/formatters';
 import { ReceiptModal } from '../components/common/ReceiptModal';
+import { PhotoUpload } from '../components/common/PhotoUpload';
 
 export const ProfilePage = () => {
   const { user, refreshUser } = useAuth();
@@ -270,17 +271,17 @@ export const ProfilePage = () => {
               />
             </div>
 
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
-                প্রোফাইল ছবি URL (ঐচ্ছিক)
+            {/* Profile Picture Direct Upload */}
+            <div className="flex flex-col items-center justify-center p-3 bg-slate-50 border border-slate-200 rounded-[6px]">
+              <label className="block text-xs font-semibold text-slate-700 uppercase mb-2">
+                প্রোফাইল ছবি পরিবর্তন
               </label>
-              <input
-                type="url"
+              <PhotoUpload
+                shape="circle"
                 value={avatar}
-                onChange={(e) => setAvatar(e.target.value)}
-                placeholder="https://..."
-                className="w-full px-3 py-1.5 bg-slate-50 border border-slate-200 rounded-[6px] text-xs text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white"
+                onChange={(photo) => setAvatar(photo)}
               />
+              <p className="text-[11px] text-slate-500 mt-1">সরাসরি নতুন ছবি আপলোড করুন</p>
             </div>
 
             <div>

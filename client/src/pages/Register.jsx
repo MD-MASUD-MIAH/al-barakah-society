@@ -13,6 +13,7 @@ import {
   CheckCircle2,
 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
+import { PhotoUpload } from '../components/common/PhotoUpload';
 
 export const Register = () => {
   const [formData, setFormData] = useState({
@@ -209,24 +210,17 @@ export const Register = () => {
                   </div>
                 </div>
 
-                {/* Optional Avatar URL */}
-                <div>
-                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                    প্রোফাইল ছবি লিংক (ঐচ্ছিক)
+                {/* Profile Photo Direct Upload */}
+                <div className="flex flex-col items-center justify-center p-3 bg-slate-50/70 border border-slate-200/80 rounded-[6px]">
+                  <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-2">
+                    প্রোফাইল ছবি (ঐচ্ছিক)
                   </label>
-                  <div className="relative">
-                    <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400">
-                      <Image className="w-4 h-4" />
-                    </div>
-                    <input
-                      type="url"
-                      name="avatar"
-                      placeholder="https://example.com/avatar.jpg"
-                      value={formData.avatar}
-                      onChange={handleChange}
-                      className="w-full pl-9 pr-3.5 py-2 bg-slate-50 border border-slate-200 rounded-[6px] text-xs focus:outline-none focus:border-emerald-600 focus:bg-white text-slate-900"
-                    />
-                  </div>
+                  <PhotoUpload
+                    shape="circle"
+                    value={formData.avatar}
+                    onChange={(photo) => setFormData((prev) => ({ ...prev, avatar: photo }))}
+                  />
+                  <p className="text-[11px] text-slate-500 mt-1">ক্যামেরা বা গ্যালারি থেকে সরাসরি ছবি আপলোড করুন</p>
                 </div>
 
                 <div className="p-3 bg-emerald-50 rounded-[6px] border border-emerald-200/80 text-[11px] text-emerald-900 leading-normal">

@@ -1,9 +1,11 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'al_barakah_super_secret_jwt_key_2026_islamic_society';
+
 // Generate JWT Token
 const generateToken = (id, role) => {
-  return jwt.sign({ id, role }, process.env.JWT_SECRET, {
+  return jwt.sign({ id, role }, JWT_SECRET, {
     expiresIn: '7d',
   });
 };

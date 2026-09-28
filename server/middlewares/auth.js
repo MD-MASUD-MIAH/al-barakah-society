@@ -1,6 +1,8 @@
 const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 
+const JWT_SECRET = process.env.JWT_SECRET || 'al_barakah_super_secret_jwt_key_2026_islamic_society';
+
 // Verify JWT Token
 const verifyToken = async (req, res, next) => {
   try {
@@ -20,7 +22,7 @@ const verifyToken = async (req, res, next) => {
       });
     }
 
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET);
     const user = await User.findById(decoded.id);
 
     if (!user) {

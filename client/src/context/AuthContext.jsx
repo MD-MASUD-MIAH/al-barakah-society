@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
         } catch (_) {}
       }
       if (!socketServerUrl) {
-        socketServerUrl = import.meta.env.PROD ? window.location.origin : 'http://localhost:5000';
+        socketServerUrl = import.meta.env.PROD ? 'https://al-barakah-server.vercel.app' : 'http://localhost:5000';
       }
       newSocket = io(socketServerUrl, {
         transports: ['websocket', 'polling'],

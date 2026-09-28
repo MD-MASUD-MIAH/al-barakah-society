@@ -1,6 +1,8 @@
 import axios from 'axios';
 
-let rawBaseUrl = import.meta.env.VITE_API_URL || (import.meta.env.PROD ? '/api' : 'http://localhost:5000/api');
+let rawBaseUrl =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.PROD ? 'https://al-barakah-server.vercel.app/api' : 'http://localhost:5000/api');
 if (rawBaseUrl.startsWith('http') && !rawBaseUrl.endsWith('/api') && !rawBaseUrl.endsWith('/api/')) {
   rawBaseUrl = `${rawBaseUrl.replace(/\/+$/, '')}/api`;
 }

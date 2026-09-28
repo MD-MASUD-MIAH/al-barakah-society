@@ -20,7 +20,19 @@ const server = http.createServer(app);
 // Socket.io initialization
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      if (!origin) return callback(null, true);
+      if (
+        !process.env.CLIENT_URL ||
+        process.env.CLIENT_URL === '*' ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost') ||
+        origin === process.env.CLIENT_URL
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
     credentials: true,
   },

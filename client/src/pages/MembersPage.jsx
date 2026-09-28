@@ -16,12 +16,13 @@ export const MembersPage = () => {
   const fetchMembers = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/users/members');
+      const res = await api.get('/users/approved');
+      const list = res.data.members || res.data.users || [];
       if (res.data.success) {
-        setMembers(res.data.members);
+        setMembers(list);
       }
     } catch (err) {
-      console.error(err);
+      console.error('Failed to load members:', err);
     } finally {
       setLoading(false);
     }

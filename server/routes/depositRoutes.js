@@ -10,12 +10,14 @@ const {
 } = require('../controllers/depositController');
 const { verifyToken, isApproved, isAdmin } = require('../middlewares/auth');
 
-// All deposit routes require logged-in and approved status
+// All deposit routes require logged-in status
 router.use(verifyToken);
-router.use(isApproved);
 
-// Aggregate stats (accessible to all approved members and admins)
+// Aggregate stats (accessible to all authenticated users for transparency & dashboard)
 router.get('/stats', getStats);
+
+// Filterable ledger and sensitive personal records require approved status or admin
+router.use(isApproved);
 
 // Filterable ledger (approved members and admins)
 router.get('/', getAllDeposits);

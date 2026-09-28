@@ -23,6 +23,7 @@ router.post('/apply-membership', applyMembership);
 
 // Get list of approved members for directory & forms
 router.get('/approved', isApproved, getApprovedMembers);
+router.get('/members', isApproved, getApprovedMembers);
 
 // Admin-only user management routes
 router.get('/', isAdmin, getAllUsers);

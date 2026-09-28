@@ -38,18 +38,35 @@ connectDB();
 // Global Middlewares
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || 'http://localhost:5173',
+    origin: process.env.CLIENT_URL || true,
     credentials: true,
   })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-// API Routes
+// Serverless DB ready middleware: ensures DB is connected before processing requests
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+  } catch (err) {
+    console.error('Database connection error in request middleware:', err);
+  }
+  next();
+});
+
+// API Routes (mounted with /api prefix and fallback root prefix for Vercel rewrite compatibility)
 app.use('/api/auth', authRoutes);
+app.use('/auth', authRoutes);
+
 app.use('/api/deposits', depositRoutes);
+app.use('/deposits', depositRoutes);
+
 app.use('/api/users', userRoutes);
+app.use('/users', userRoutes);
+
 app.use('/api/messages', messageRoutes);
+app.use('/messages', messageRoutes);
 
 // Health check endpoint
 app.get('/api/health', (req, res) => {

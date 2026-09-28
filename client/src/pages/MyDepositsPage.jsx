@@ -8,6 +8,7 @@ import { formatCurrency, formatDate, getPaymentMethodInfo } from '../utils/forma
 export const MyDepositsPage = () => {
   const { user } = useAuth();
   const [deposits, setDeposits] = useState([]);
+  const [totalDeposited, setTotalDeposited] = useState(0);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -17,15 +18,15 @@ export const MyDepositsPage = () => {
   const fetchMyDeposits = async () => {
     try {
       setLoading(true);
-      const res = await api.get('/deposits?limit=50');
+      const res = await api.get('/deposits/my-deposits');
       if (res.data.success) {
-        const myOnly = res.data.deposits.filter(
-          (d) => d.memberId?._id === user?._id || d.memberId === user?._id
-        );
-        setDeposits(myOnly);
+        setDeposits(res.data.deposits || []);
+        if (typeof res.data.totalDeposited === 'number') {
+          setTotalDeposited(res.data.totalDeposited);
+        }
       }
     } catch (err) {
-      console.error(err);
+      console.error('Failed to load my deposits:', err);
     } finally {
       setLoading(false);
     }
@@ -68,7 +69,7 @@ export const MyDepositsPage = () => {
           আপনার বর্তমান জমাকৃত মোট সঞ্চয়
         </p>
         <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-gold-300 font-sans mt-1">
-          {formatCurrency(user?.totalDeposited || 0)}
+          {formatCurrency(totalDeposited || user?.totalDeposited || 0)}
         </h2>
         <p className="text-xs text-emerald-200/80 mt-2">
           সদস্যের নাম: {user?.name} | মোবাইল: {user?.phone}

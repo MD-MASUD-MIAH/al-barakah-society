@@ -65,29 +65,19 @@ export const Register = () => {
       <div className="absolute -top-40 -left-40 w-96 h-96 rounded-full bg-gold-500/10 blur-3xl pointer-events-none"></div>
       <div className="absolute -bottom-40 -right-40 w-96 h-96 rounded-full bg-emerald-500/10 blur-3xl pointer-events-none"></div>
 
-      <div className="sm:mx-auto sm:w-full sm:max-w-md z-10 text-center">
-        <div className="inline-flex items-center justify-center w-16 h-16 rounded-[6px] bg-white p-1.5 border border-gold-400 mb-3 overflow-hidden">
-          <img
-            src="/logo-al-barakah.png"
-            alt="আল-বারাকাহ সোসাইটি"
-            className="w-full h-full object-contain"
-          />
-        </div>
-        <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
-          আল-বারাকাহ সোসাইটি
-        </h2>
-        <p className="mt-1 text-xs font-semibold text-gold-400 flex items-center justify-center gap-1.5">
-          <Sparkles className="w-3.5 h-3.5" />
-          <span>বিশ্বাসের বন্ধন</span>
-          <Sparkles className="w-3.5 h-3.5" />
-        </p>
-        <p className="mt-1 text-xs text-emerald-200/80">
-          নতুন একাউন্ট নিবন্ধন ফরম
-        </p>
-      </div>
-
-      <div className="mt-6 sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0 z-10">
+      <div className="sm:mx-auto sm:w-full sm:max-w-md px-4 sm:px-0 z-10">
         <div className="bg-white py-7 px-6 sm:px-8 rounded-[6px] border border-slate-200 shadow-none">
+          {/* Brand Logo inside Card (Original Colors) */}
+          <div className="flex flex-col items-center justify-center mb-6">
+            <img
+              src="/logo-al-barakah.png"
+              alt="আল-বারাকাহ সোসাইটি"
+              className="h-24 sm:h-28 w-auto object-contain transition-transform hover:scale-105"
+            />
+            <p className="text-xs font-semibold text-slate-500 mt-1">
+              নতুন একাউন্ট নিবন্ধন ফরম
+            </p>
+          </div>
           {/* Success State */}
           {isSubmitted ? (
             <div className="text-center py-2 space-y-4 animate-in zoom-in-95 duration-200">

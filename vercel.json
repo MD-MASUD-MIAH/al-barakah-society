@@ -1,5 +1,6 @@
 {
-  "buildCommand": "npm run build --prefix client",
+  "version": 2,
+  "buildCommand": "npm --prefix client install --include=dev && npm --prefix client run build",
   "outputDirectory": "client/dist",
   "rewrites": [
     {

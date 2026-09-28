@@ -27,13 +27,14 @@ export const AddDepositPage = () => {
   const fetchApprovedMembers = async () => {
     try {
       setLoadingMembers(true);
-      const res = await api.get('/users/members');
-      if (res.data.success && res.data.members?.length > 0) {
-        setMembers(res.data.members);
-        setFormData((prev) => ({ ...prev, memberId: res.data.members[0]._id }));
+      const res = await api.get('/users/approved');
+      const list = res.data.members || res.data.users || [];
+      if (res.data.success && list.length > 0) {
+        setMembers(list);
+        setFormData((prev) => ({ ...prev, memberId: list[0]._id }));
       }
     } catch (err) {
-      console.error(err);
+      console.error('Failed to load approved members:', err);
     } finally {
       setLoadingMembers(false);
     }

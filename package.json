@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Al-Barakah Society (আল-বারাকাহ সোসাইটি) - বিশ্বাসের বন্ধন: Production-ready Community Ledger & Communication Web Application",
   "scripts": {
-    "build": "npm run build --prefix client",
+    "build": "npm --prefix client install --include=dev && npm --prefix client run build",
     "server": "npm run start --prefix server",
     "server:dev": "npm run dev --prefix server",
     "client": "npm run dev --prefix client",

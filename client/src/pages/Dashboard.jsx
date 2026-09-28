@@ -180,11 +180,11 @@ export const Dashboard = () => {
         {isAdmin ? (
           <StatCard
             title="অনুমোদন অপেক্ষমাণ (Pending)"
-            value={`${pendingCount} জন`}
+            value={`${(pendingCount !== undefined && pendingCount !== null) ? pendingCount : (stats.pendingMembersCount || 0)} জন`}
             subtitle="নতুন সদস্য নিবন্ধন আবেদন"
             icon={UserCheck}
-            colorTheme={pendingCount > 0 ? 'purple' : 'emerald'}
-            badgeText={pendingCount > 0 ? 'পর্যালোচনা প্রয়োজন' : 'সব অনুমোদিত'}
+            colorTheme={((pendingCount || stats.pendingMembersCount || 0) > 0) ? 'purple' : 'emerald'}
+            badgeText={((pendingCount || stats.pendingMembersCount || 0) > 0) ? 'পর্যালোচনা প্রয়োজন' : 'সব অনুমোদিত'}
             onClick={() => navigate('/admin/approvals')}
           />
         ) : (

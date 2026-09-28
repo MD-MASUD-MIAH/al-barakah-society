@@ -17,7 +17,10 @@ exports.getStats = async (req, res) => {
     const activeMembersCount = await User.countDocuments({ status: 'approved' });
 
     // 3. Total Pending Approvals (for admin indicator)
-    const pendingMembersCount = await User.countDocuments({ status: 'pending' });
+    const pendingMembersCount = await User.countDocuments({
+      status: { $in: ['pending', 'not_applied'] },
+      role: { $ne: 'admin' },
+    });
 
     // 4. This Month's Collection
     const now = new Date();

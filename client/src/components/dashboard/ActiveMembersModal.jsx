@@ -18,8 +18,9 @@ export const ActiveMembersModal = ({ isOpen, onClose }) => {
     try {
       setLoading(true);
       const res = await api.get('/users/approved');
+      const list = res.data.users || res.data.members || [];
       if (res.data.success) {
-        setMembers(res.data.users);
+        setMembers(list);
       }
     } catch (err) {
       console.error('Failed to load active members:', err);

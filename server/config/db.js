@@ -25,30 +25,52 @@ mongoose.connection.on('reconnected', () => {
 const DIRECT_FALLBACK_URI =
   'mongodb://al-barakah-society:LQTNgNGQx17nDc6i@ac-sbelmyf-shard-00-00.unhq3oq.mongodb.net:27017,ac-sbelmyf-shard-00-01.unhq3oq.mongodb.net:27017,ac-sbelmyf-shard-00-02.unhq3oq.mongodb.net:27017/al_barakah_society?ssl=true&replicaSet=atlas-88oqa5-shard-0&authSource=admin&retryWrites=true&w=majority';
 
+let cachedPromise = null;
+
 const connectDB = async () => {
+  // If already connected, return immediately (crucial for Vercel Serverless)
+  if (mongoose.connection.readyState >= 1) {
+    return mongoose.connection;
+  }
+
+  if (cachedPromise) {
+    return cachedPromise;
+  }
+
   let uri = process.env.MONGO_URI || DIRECT_FALLBACK_URI;
 
-  try {
-    const conn = await mongoose.connect(uri, {
-      serverSelectionTimeoutMS: 8000,
-    });
-    console.log(`✅ MongoDB Connected: ${conn.connection.host} (${conn.connection.name})`);
-  } catch (error) {
-    console.warn(`⚠️ Primary MongoDB connection attempt failed: ${error.message}`);
-    // If SRV or initial URI failed, try direct standard replica set URI fallback
-    if (uri !== DIRECT_FALLBACK_URI) {
-      try {
-        console.log(`🔄 Attempting connection using direct replica-set fallback...`);
-        const conn = await mongoose.connect(DIRECT_FALLBACK_URI, {
-          serverSelectionTimeoutMS: 8000,
-        });
-        console.log(`✅ MongoDB Connected via Fallback: ${conn.connection.host} (${conn.connection.name})`);
-        return;
-      } catch (fallbackError) {
-        console.error(`❌ Fallback MongoDB Connection Error: ${fallbackError.message}`);
+  cachedPromise = (async () => {
+    try {
+      const conn = await mongoose.connect(uri, {
+        serverSelectionTimeoutMS: 8000,
+      });
+      console.log(`✅ MongoDB Connected: ${conn.connection.host} (${conn.connection.name})`);
+      return conn;
+    } catch (error) {
+      console.warn(`⚠️ Primary MongoDB connection attempt failed: ${error.message}`);
+      // If SRV or initial URI failed, try direct standard replica set URI fallback
+      if (uri !== DIRECT_FALLBACK_URI) {
+        try {
+          console.log(`🔄 Attempting connection using direct replica-set fallback...`);
+          const conn = await mongoose.connect(DIRECT_FALLBACK_URI, {
+            serverSelectionTimeoutMS: 8000,
+          });
+          console.log(`✅ MongoDB Connected via Fallback: ${conn.connection.host} (${conn.connection.name})`);
+          return conn;
+        } catch (fallbackError) {
+          console.error(`❌ Fallback MongoDB Connection Error: ${fallbackError.message}`);
+        }
       }
+      console.error(`💡 Tip: Check MongoDB Atlas Network Access (whitelist 0.0.0.0/0).`);
+      throw error;
     }
-    console.error(`💡 Tip: Check MongoDB Atlas Network Access (whitelist 0.0.0.0/0).`);
+  })();
+
+  try {
+    return await cachedPromise;
+  } catch (err) {
+    cachedPromise = null;
+    return null;
   }
 };
 

@@ -43,7 +43,10 @@ exports.getAllUsers = async (req, res) => {
 // @access  Private (Admin only)
 exports.getPendingUsers = async (req, res) => {
   try {
-    const pendingUsers = await User.find({ status: 'pending' }).sort({ createdAt: -1 });
+    const pendingUsers = await User.find({
+      status: { $in: ['pending', 'not_applied'] },
+      role: { $ne: 'admin' },
+    }).sort({ createdAt: -1 });
 
     res.status(200).json({
       success: true,
@@ -72,6 +75,7 @@ exports.getApprovedMembers = async (req, res) => {
       success: true,
       count: approvedMembers.length,
       users: approvedMembers,
+      members: approvedMembers,
     });
   } catch (error) {
     res.status(500).json({

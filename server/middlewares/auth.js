@@ -43,7 +43,7 @@ const verifyToken = async (req, res, next) => {
 
 // Check if user is approved
 const isApproved = (req, res, next) => {
-  if (req.user && req.user.status === 'approved') {
+  if (req.user && (req.user.status === 'approved' || req.user.role === 'admin')) {
     return next();
   }
   return res.status(403).json({

@@ -31,10 +31,11 @@ export const DepositFormModal = ({ isOpen, onClose, onSuccess }) => {
     try {
       setLoadingMembers(true);
       const { data } = await api.get('/users/approved');
-      if (data.success) {
-        setMembers(data.users);
-        if (data.users.length > 0 && !formData.memberId) {
-          setFormData((prev) => ({ ...prev, memberId: data.users[0]._id }));
+      const list = data.users || data.members || [];
+      if (data.success && list.length > 0) {
+        setMembers(list);
+        if (!formData.memberId) {
+          setFormData((prev) => ({ ...prev, memberId: list[0]._id }));
         }
       }
     } catch (err) {

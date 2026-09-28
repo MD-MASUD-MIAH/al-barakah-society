@@ -11,7 +11,6 @@
   },
   "dependencies": {
     "@vitejs/plugin-react": "^6.1.1",
-    "al-barakah-society": "file:..",
     "autoprefixer": "^10.6.1",
     "axios": "^1.20.0",
     "canvas-confetti": "^1.9.4",

@@ -19,7 +19,15 @@ export const AuthProvider = ({ children }) => {
   useEffect(() => {
     let newSocket = null;
     if (token && user && user.status === 'approved') {
-      const socketServerUrl = import.meta.env.VITE_SOCKET_URL || (import.meta.env.PROD ? window.location.origin : 'http://localhost:5000');
+      let socketServerUrl = import.meta.env.VITE_SOCKET_URL;
+      if (!socketServerUrl && import.meta.env.VITE_API_URL) {
+        try {
+          socketServerUrl = new URL(import.meta.env.VITE_API_URL).origin;
+        } catch (_) {}
+      }
+      if (!socketServerUrl) {
+        socketServerUrl = import.meta.env.PROD ? window.location.origin : 'http://localhost:5000';
+      }
       newSocket = io(socketServerUrl, {
         transports: ['websocket', 'polling'],
         reconnectionAttempts: 5,

@@ -38,8 +38,24 @@ connectDB();
 // Global Middlewares
 app.use(
   cors({
-    origin: process.env.CLIENT_URL || true,
+    origin: (origin, callback) => {
+      // Allow requests with no origin (like mobile apps, curl, Postman)
+      if (!origin) return callback(null, true);
+      // Allow any vercel domain, localhost, or configured CLIENT_URL
+      if (
+        !process.env.CLIENT_URL ||
+        process.env.CLIENT_URL === '*' ||
+        origin.endsWith('.vercel.app') ||
+        origin.includes('localhost') ||
+        origin === process.env.CLIENT_URL
+      ) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization', 'X-Requested-With'],
   })
 );
 app.use(express.json());

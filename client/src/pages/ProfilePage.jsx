@@ -4,19 +4,17 @@ import {
   Mail,
   Wallet,
   CheckCircle,
-  FileText,
   AlertCircle,
   Camera,
-  ArrowDownLeft,
-  ArrowUpRight,
-  Clock,
   ChevronRight,
-  Search,
+  Shield,
+  CreditCard,
+  Calendar,
 } from 'lucide-react';
 import api from '../services/api';
 import { useAuth } from '../context/AuthContext';
 import { showSuccessAlert, showErrorAlert } from '../utils/alerts';
-import { formatCurrency, formatDate, getPaymentMethodInfo } from '../utils/formatters';
+import { formatCurrency, formatDate } from '../utils/formatters';
 import { ReceiptModal } from '../components/common/ReceiptModal';
 import { TransactionDrawerModal } from '../components/common/TransactionDrawerModal';
 import { compressImage } from '../utils/imageUpload';
@@ -26,7 +24,7 @@ export const ProfilePage = () => {
 
   const [myDeposits, setMyDeposits] = useState([]);
   const [totalDeposited, setTotalDeposited] = useState(0);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
 
   // Edit profile state
   const [name, setName] = useState(user?.name || '');
@@ -36,10 +34,6 @@ export const ProfilePage = () => {
   const [uploadingAvatar, setUploadingAvatar] = useState(false);
   const [statusMsg, setStatusMsg] = useState({ type: '', text: '' });
 
-  // Filter & Search for inline transaction list
-  const [txFilter, setTxFilter] = useState('all'); // 'all', 'credit', 'debit', 'pending'
-  const [txSearch, setTxSearch] = useState('');
-
   // Modals
   const [receiptModalOpen, setReceiptModalOpen] = useState(false);
   const [selectedReceipt, setSelectedReceipt] = useState(null);
@@ -47,7 +41,6 @@ export const ProfilePage = () => {
 
   // File input ref for direct avatar upload
   const avatarInputRef = useRef(null);
-  const statementSectionRef = useRef(null);
 
   useEffect(() => {
     fetchMyDeposits();
@@ -65,8 +58,8 @@ export const ProfilePage = () => {
       setLoading(true);
       const { data } = await api.get('/deposits/my-deposits');
       if (data.success) {
-        setMyDeposits(data.deposits);
-        setTotalDeposited(data.totalDeposited);
+        setMyDeposits(data.deposits || []);
+        setTotalDeposited(data.totalDeposited || 0);
       }
     } catch (err) {
       console.error('Failed to load my deposits:', err);
@@ -103,14 +96,6 @@ export const ProfilePage = () => {
     }
   };
 
-  // Click on Total Balance Card: open drawer and smooth scroll to history
-  const handleTotalBalanceClick = () => {
-    setDrawerOpen(true);
-    if (statementSectionRef.current) {
-      statementSectionRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
-  };
-
   const handleUpdateProfile = async (e) => {
     e.preventDefault();
     setStatusMsg({ type: '', text: '' });
@@ -138,26 +123,6 @@ export const ProfilePage = () => {
       setUpdating(false);
     }
   };
-
-  // Filtered inline transactions
-  const filteredInlineDeposits = myDeposits.filter((tx) => {
-    const isPending = tx.status === 'pending';
-    const isDebit = tx.type === 'debit' || tx.amount < 0;
-
-    if (txFilter === 'credit' && (isDebit || isPending)) return false;
-    if (txFilter === 'debit' && !isDebit) return false;
-    if (txFilter === 'pending' && !isPending) return false;
-
-    if (!txSearch.trim()) return true;
-    const q = txSearch.toLowerCase();
-    return (
-      tx.trxId?.toLowerCase().includes(q) ||
-      tx.note?.toLowerCase().includes(q) ||
-      tx.paymentMethod?.toLowerCase().includes(q) ||
-      String(tx.amount).includes(q) ||
-      tx.date?.includes(q)
-    );
-  });
 
   return (
     <div className="space-y-5">
@@ -219,14 +184,14 @@ export const ProfilePage = () => {
                 <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-800 text-gold-300 border border-gold-500/40">
                   {user?.role === 'admin' ? 'অ্যাডমিনিস্ট্রেটর' : 'সোসাইটি সদস্য'}
                 </span>
-                <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-700/60 text-emerald-100">
+                <span className="text-[11px] font-semibold px-2.5 py-0.5 rounded-full bg-emerald-700/60 text-emerald-100">
                   যাচাইকৃত একাউন্ট
                 </span>
               </div>
               <h2 className="text-xl sm:text-2xl font-bold text-white tracking-tight">
                 {user?.name}
               </h2>
-              <div className="flex items-center justify-center sm:justify-start gap-3 text-xs text-emerald-200/90 mt-1">
+              <div className="flex items-center justify-center sm:justify-start gap-3 text-xs text-emerald-200/90 mt-1 flex-wrap">
                 {user?.phone && (
                   <span className="flex items-center gap-1">
                     <Phone className="w-3.5 h-3.5 text-gold-400" />
@@ -243,9 +208,9 @@ export const ProfilePage = () => {
             </div>
           </div>
 
-          {/* Interactive Total Balance Card (Triggers Transaction Drawer & History) */}
+          {/* Interactive Total Balance Card (Triggers Transaction Modal) */}
           <div
-            onClick={handleTotalBalanceClick}
+            onClick={() => setDrawerOpen(true)}
             className="group relative cursor-pointer bg-white/10 hover:bg-white/15 p-4 sm:p-5 rounded-xl border border-gold-400/40 hover:border-gold-400 text-center sm:text-right transition-all duration-200 hover:-translate-y-0.5 hover:shadow-lg min-w-[220px]"
             title="লেনদেন বিবরণী দেখতে ক্লিক করুন"
           >
@@ -264,174 +229,83 @@ export const ProfilePage = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Left 2 Cols: Detailed Personal Deposit Statement */}
-        <div ref={statementSectionRef} className="lg:col-span-2 space-y-3">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 bg-white p-4 rounded-xl border border-slate-200/90 shadow-2xs">
+      {/* Clean 2-Column Layout: Account Overview & Profile Settings (No cluttered inline transaction table) */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
+        {/* Account Details & Quick Transaction Trigger */}
+        <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-2xs space-y-4">
+          <div className="border-b border-slate-100 pb-3 flex items-center justify-between">
             <div>
-              <h3 className="text-sm sm:text-base font-bold text-slate-900 flex items-center gap-2">
-                <Wallet className="w-4 h-4 text-emerald-800" />
-                <span>আমার লেনদেনসমূহ (Transaction History)</span>
-              </h3>
-              <p className="text-xs text-slate-500 mt-0.5">
-                সকল জমা, উত্তোলন এবং লেনদেনের বিবরণী
-              </p>
+              <h3 className="font-bold text-sm text-slate-900">অ্যাকাউন্ট ওভারভিউ</h3>
+              <p className="text-xs text-slate-500">আপনার সদস্যপদ ও তহবিলের বিবরণ</p>
             </div>
-
-            {/* Quick Filter Tabs */}
-            <div className="flex items-center gap-1 bg-slate-100 p-1 rounded-lg">
-              {[
-                { key: 'all', label: 'সকল' },
-                { key: 'credit', label: 'জমা (Credit)' },
-                { key: 'debit', label: 'উত্তোলন (Debit)' },
-                { key: 'pending', label: 'অপেক্ষমাণ' },
-              ].map((tab) => (
-                <button
-                  key={tab.key}
-                  type="button"
-                  onClick={() => setTxFilter(tab.key)}
-                  className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
-                    txFilter === tab.key
-                      ? 'bg-white text-emerald-900 shadow-xs'
-                      : 'text-slate-600 hover:text-slate-900'
-                  }`}
-                >
-                  {tab.label}
-                </button>
-              ))}
-            </div>
+            <span className="text-[11px] font-semibold px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200/60">
+              সক্রিয় সদস্য
+            </span>
           </div>
 
-          {/* Search Bar */}
-          <div className="relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              value={txSearch}
-              onChange={(e) => setTxSearch(e.target.value)}
-              placeholder="আইডি, মাধ্যম, পরিমাণ বা বিবরণ দিয়ে খুঁজুন..."
-              className="w-full pl-9 pr-4 py-2 bg-white border border-slate-200 rounded-lg text-xs text-slate-800 placeholder-slate-400 focus:outline-none focus:border-emerald-600 focus:ring-1 focus:ring-emerald-600 shadow-2xs"
-            />
-          </div>
-
-          {loading ? (
-            <div className="bg-white rounded-xl p-12 text-center border border-slate-200 shadow-2xs">
-              <div className="w-8 h-8 border-3 border-emerald-900 border-t-gold-500 rounded-full animate-spin mx-auto mb-2" />
-              <p className="text-xs text-slate-500">স্টেটমেন্ট লোড হচ্ছে...</p>
+          <div className="space-y-3 text-xs">
+            <div className="flex items-center justify-between py-2 border-b border-slate-50">
+              <span className="text-slate-500 flex items-center gap-1.5">
+                <Shield className="w-3.5 h-3.5 text-slate-400" />
+                মেম্বার রোল
+              </span>
+              <span className="font-semibold text-slate-900 capitalize">
+                {user?.role === 'admin' ? 'অ্যাডমিনিস্ট্রেটর' : 'সাধারণ সদস্য'}
+              </span>
             </div>
-          ) : filteredInlineDeposits.length === 0 ? (
-            <div className="bg-white rounded-xl p-10 text-center border border-slate-200 shadow-2xs">
-              <Wallet className="w-10 h-10 text-slate-300 mx-auto mb-2" />
-              <p className="text-sm font-bold text-slate-700">কোনো লেনদেন পাওয়া যায়নি</p>
-              <p className="text-xs text-slate-500 mt-1">
-                {txSearch ? 'অন্য কিওয়ার্ড দিয়ে খুঁজুন।' : 'আপনার একাউন্টে কোনো লেনদেন নেই।'}
-              </p>
-            </div>
-          ) : (
-            <div className="bg-white rounded-xl border border-slate-200 shadow-2xs overflow-hidden">
-              <div className="overflow-x-auto">
-                <table className="w-full text-left border-collapse text-xs">
-                  <thead>
-                    <tr className="bg-slate-50/80 border-b border-slate-200 text-[11px] font-bold text-slate-500 uppercase tracking-wider">
-                      <th className="py-3 px-4">তারিখ</th>
-                      <th className="py-3 px-4">প্রকার</th>
-                      <th className="py-3 px-4">পেমেন্ট মাধ্যম</th>
-                      <th className="py-3 px-4">বিবরণ / ট্রানজেকশন</th>
-                      <th className="py-3 px-4 text-right">পরিমাণ (টাকা)</th>
-                      <th className="py-3 px-4 text-center">রসিদ</th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-slate-100">
-                    {filteredInlineDeposits.map((item) => {
-                      const method = getPaymentMethodInfo(item.paymentMethod);
-                      const isDebit = item.type === 'debit' || item.amount < 0;
-                      const isPending = item.status === 'pending';
 
-                      return (
-                        <tr key={item._id} className="hover:bg-slate-50/80 transition-colors">
-                          <td className="py-3 px-4 font-medium text-slate-600 whitespace-nowrap">
-                            {formatDate(item.date)}
-                          </td>
-                          <td className="py-3 px-4 whitespace-nowrap">
-                            <span
-                              className={`inline-flex items-center gap-1 px-2 py-0.5 rounded text-[11px] font-semibold ${
-                                isPending
-                                  ? 'bg-amber-50 text-amber-800 border border-amber-200'
-                                  : isDebit
-                                  ? 'bg-rose-50 text-rose-800 border border-rose-200'
-                                  : 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                              }`}
-                            >
-                              {isPending ? (
-                                <>
-                                  <Clock className="w-3 h-3 text-amber-600" /> অপেক্ষমাণ
-                                </>
-                              ) : isDebit ? (
-                                <>
-                                  <ArrowUpRight className="w-3 h-3 text-rose-600" /> ডেবিট
-                                </>
-                              ) : (
-                                <>
-                                  <ArrowDownLeft className="w-3 h-3 text-emerald-600" /> ক্রেডিট
-                                </>
-                              )}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 whitespace-nowrap">
-                            <span
-                              className={`inline-flex items-center px-2 py-0.5 rounded text-[11px] font-semibold border ${method.badgeClass}`}
-                            >
-                              {method.label}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-slate-600 max-w-[200px] truncate">
-                            {item.trxId ? (
-                              <span className="font-mono text-slate-800 bg-slate-100 px-1 py-0.5 rounded mr-1">
-                                {item.trxId}
-                              </span>
-                            ) : null}
-                            <span>{item.note || '-'}</span>
-                          </td>
-                          <td className="py-3 px-4 text-right font-bold font-sans whitespace-nowrap">
-                            <span
-                              className={
-                                isPending
-                                  ? 'text-amber-700'
-                                  : isDebit
-                                  ? 'text-rose-600'
-                                  : 'text-emerald-900'
-                              }
-                            >
-                              {isDebit ? '-' : '+'} {formatCurrency(Math.abs(item.amount))}
-                            </span>
-                          </td>
-                          <td className="py-3 px-4 text-center whitespace-nowrap">
-                            <button
-                              onClick={() => {
-                                setSelectedReceipt(item);
-                                setReceiptModalOpen(true);
-                              }}
-                              className="inline-flex items-center gap-1 px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 rounded text-xs font-semibold border border-emerald-200 transition-colors"
-                            >
-                              <FileText className="w-3.5 h-3.5 text-emerald-800" />
-                              <span>রসিদ</span>
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
-                  </tbody>
-                </table>
+            <div className="flex items-center justify-between py-2 border-b border-slate-50">
+              <span className="text-slate-500 flex items-center gap-1.5">
+                <CreditCard className="w-3.5 h-3.5 text-slate-400" />
+                মোট জমা কিস্তি
+              </span>
+              <span className="font-bold text-slate-900 font-sans">
+                {myDeposits.length} টি
+              </span>
+            </div>
+
+            <div className="flex items-center justify-between py-2 border-b border-slate-50">
+              <span className="text-slate-500 flex items-center gap-1.5">
+                <Wallet className="w-3.5 h-3.5 text-slate-400" />
+                সর্বমোট সঞ্চিত ফান্ড
+              </span>
+              <span className="font-bold text-emerald-850 font-sans text-sm">
+                {formatCurrency(totalDeposited)}
+              </span>
+            </div>
+
+            {user?.createdAt && (
+              <div className="flex items-center justify-between py-2">
+                <span className="text-slate-500 flex items-center gap-1.5">
+                  <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                  নিবন্ধন তারিখ
+                </span>
+                <span className="font-medium text-slate-700">
+                  {formatDate(user.createdAt)}
+                </span>
               </div>
-            </div>
-          )}
+            )}
+          </div>
+
+          {/* Quick Button to open Transaction History Modal */}
+          <div className="pt-2">
+            <button
+              type="button"
+              onClick={() => setDrawerOpen(true)}
+              className="w-full py-2.5 px-4 bg-emerald-50 hover:bg-emerald-100 text-emerald-900 font-bold text-xs rounded-lg border border-emerald-200 transition-all flex items-center justify-center gap-2 cursor-pointer shadow-2xs"
+            >
+              <Wallet className="w-4 h-4 text-emerald-800" />
+              <span>আমার সকল লেনদেন দেখুন ({myDeposits.length})</span>
+              <ChevronRight className="w-3.5 h-3.5 text-emerald-700" />
+            </button>
+          </div>
         </div>
 
-        {/* Right 1 Col: Streamlined Profile Information & Settings */}
-        <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-2xs space-y-4 h-fit">
+        {/* Profile Settings & Password Change Form */}
+        <div className="bg-white rounded-xl p-5 border border-slate-200/90 shadow-2xs space-y-4">
           <div className="border-b border-slate-100 pb-3">
-            <h3 className="font-bold text-sm text-slate-900">প্রোফাইল সেটিংস</h3>
-            <p className="text-xs text-slate-500">ব্যক্তিগত তথ্য ও পাসওয়ার্ড</p>
+            <h3 className="font-bold text-sm text-slate-900">প্রোফাইল তথ্য আপডেট</h3>
+            <p className="text-xs text-slate-500">নাম, মোবাইল নম্বর ও পাসওয়ার্ড পরিবর্তন</p>
           </div>
 
           {statusMsg.text && (
@@ -451,7 +325,7 @@ export const ProfilePage = () => {
             </div>
           )}
 
-          <form onSubmit={handleUpdateProfile} className="space-y-4">
+          <form onSubmit={handleUpdateProfile} className="space-y-3.5">
             <div>
               <label className="block text-xs font-semibold text-slate-700 uppercase mb-1">
                 পূর্ণ নাম
@@ -486,7 +360,7 @@ export const ProfilePage = () => {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="পরিবর্তন না করলে খালি রাখুন"
+                placeholder="পরিবর্তন না করতে চাইলে ফাঁকা রাখুন"
                 className="w-full px-3 py-2 bg-slate-50 border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none focus:border-emerald-600 focus:bg-white transition-colors"
               />
             </div>
@@ -502,7 +376,7 @@ export const ProfilePage = () => {
         </div>
       </div>
 
-      {/* Transaction Slide-over Drawer / Modal */}
+      {/* Transaction Slide-over Drawer / Modal (Opened when clicking total balance or button) */}
       <TransactionDrawerModal
         isOpen={drawerOpen}
         onClose={() => setDrawerOpen(false)}

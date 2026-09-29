@@ -215,8 +215,8 @@ export const Dashboard = () => {
         isAdmin={isAdmin}
       />
 
-      {/* Summary Stat Cards Grid (Positioned at bottom above footer) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-1">
+      {/* Summary Stat Cards Grid (Positioned at bottom above footer - 2 columns on mobile) */}
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-2.5 sm:gap-4 pt-1">
         {/* 1. Total Society Balance */}
         <StatCard
           title="সোসাইটি ফান্ড"

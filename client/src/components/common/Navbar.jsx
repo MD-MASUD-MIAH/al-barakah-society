@@ -64,7 +64,7 @@ export const Navbar = () => {
   return (
     <nav className="bg-emerald-900 border-b-2 border-gold-500 shadow-none sticky top-0 z-40 text-white">
       <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20 lg:h-24">
+        <div className="flex items-center justify-between h-20 lg:h-24">
           {/* 1. Mobile Left: Hamburger menu button */}
           <div className="flex lg:hidden items-center w-10 shrink-0">
             <button
@@ -83,11 +83,11 @@ export const Navbar = () => {
               className="flex items-center shrink-0 group focus:outline-none bg-transparent border-0"
               title="আল-বারাকাহ সোসাইটি"
             >
-              <div className="h-12 sm:h-16 lg:h-20 flex items-center justify-center bg-transparent border-0 p-0 shrink-0">
+              <div className="h-16 lg:h-20 flex items-center justify-center bg-transparent border-0 p-0 shrink-0">
                 <img
                   src="/logo-al-barakah.png"
                   alt="আল-বারাকাহ সোসাইটি লোগো"
-                  className="h-11 sm:h-14 lg:h-20 w-auto object-contain brightness-0 invert logo-white transition-transform group-hover:scale-105"
+                  className="h-16 lg:h-20 w-auto object-contain brightness-0 invert logo-white transition-transform group-hover:scale-105"
                 />
               </div>
             </Link>

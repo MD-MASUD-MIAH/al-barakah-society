@@ -179,8 +179,44 @@ export const Dashboard = () => {
         </div>
       )}
 
-      {/* Summary Stat Cards Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4">
+      {/* Cellfin-style Service Hub Grid */}
+      <ServiceHubGrid
+        onOpenBalance={() => navigate('/fund')}
+        onOpenActiveMembers={() => navigate('/members')}
+        onOpenThisMonth={() => navigate('/monthly-report')}
+        onOpenDepositModal={() => {
+          if (isAdmin) {
+            navigate('/add-deposit');
+          } else {
+            setDrawerOpen(true);
+          }
+        }}
+        onOpenLedger={() => {
+          if (isApproved || isAdmin) {
+            navigate('/ledger');
+          } else {
+            navigate('/apply-membership');
+          }
+        }}
+        onOpenLeaderboard={() => navigate('/leaderboard')}
+        onOpenApplyMembership={() => navigate('/apply-membership')}
+        onOpenNoticeBoard={() => navigate('/notices')}
+        onOpenReceiptFinder={() => navigate('/receipts')}
+        onOpenCommunity={() => {
+          if (isApproved || isAdmin) {
+            navigate('/community');
+          } else {
+            navigate('/apply-membership');
+          }
+        }}
+        onOpenShariahPolicy={() => navigate('/shariah-policy')}
+        onOpenMyDeposits={() => setDrawerOpen(true)}
+        isApproved={isApproved}
+        isAdmin={isAdmin}
+      />
+
+      {/* Summary Stat Cards Grid (Positioned at bottom above footer) */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 pt-1">
         {/* 1. Total Society Balance */}
         <StatCard
           title="সোসাইটি ফান্ড"
@@ -233,42 +269,6 @@ export const Dashboard = () => {
           />
         )}
       </div>
-
-      {/* Cellfin-style Service Hub Grid */}
-      <ServiceHubGrid
-        onOpenBalance={() => navigate('/fund')}
-        onOpenActiveMembers={() => navigate('/members')}
-        onOpenThisMonth={() => navigate('/monthly-report')}
-        onOpenDepositModal={() => {
-          if (isAdmin) {
-            navigate('/add-deposit');
-          } else {
-            setDrawerOpen(true);
-          }
-        }}
-        onOpenLedger={() => {
-          if (isApproved || isAdmin) {
-            navigate('/ledger');
-          } else {
-            navigate('/apply-membership');
-          }
-        }}
-        onOpenLeaderboard={() => navigate('/leaderboard')}
-        onOpenApplyMembership={() => navigate('/apply-membership')}
-        onOpenNoticeBoard={() => navigate('/notices')}
-        onOpenReceiptFinder={() => navigate('/receipts')}
-        onOpenCommunity={() => {
-          if (isApproved || isAdmin) {
-            navigate('/community');
-          } else {
-            navigate('/apply-membership');
-          }
-        }}
-        onOpenShariahPolicy={() => navigate('/shariah-policy')}
-        onOpenMyDeposits={() => setDrawerOpen(true)}
-        isApproved={isApproved}
-        isAdmin={isAdmin}
-      />
 
       {/* Slide-over Transaction Drawer Modal */}
       <TransactionDrawerModal

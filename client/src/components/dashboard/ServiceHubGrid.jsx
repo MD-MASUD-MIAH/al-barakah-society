@@ -146,7 +146,7 @@ export const ServiceHubGrid = ({
                 className="group flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg hover:bg-slate-50 transition-all duration-150 cursor-pointer focus:outline-none"
               >
                 <div
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center border mb-2 transition-transform duration-200 group-hover:scale-108 group-active:scale-95 shadow-2xs ${item.iconBg}`}
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center border mb-2 transition-transform duration-200 group-hover:scale-108 group-active:scale-95 shadow-2xs ${item.iconBg}`}
                 >
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
                 </div>
@@ -181,7 +181,7 @@ export const ServiceHubGrid = ({
                 className="group flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg hover:bg-slate-50 transition-all duration-150 cursor-pointer focus:outline-none"
               >
                 <div
-                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center border mb-2 transition-transform duration-200 group-hover:scale-108 group-active:scale-95 shadow-2xs ${item.iconBg}`}
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center border mb-2 transition-transform duration-200 group-hover:scale-108 group-active:scale-95 shadow-2xs ${item.iconBg}`}
                 >
                   <Icon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
                 </div>

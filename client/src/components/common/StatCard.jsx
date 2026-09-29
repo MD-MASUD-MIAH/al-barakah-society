@@ -67,7 +67,7 @@ export const StatCard = ({ title, value, subtitle, icon: Icon, colorTheme = 'eme
             {Icon && <Icon className="w-5 h-5 sm:w-5.5 sm:h-5.5" />}
           </div>
           {badgeText && (
-            <span className="text-[10px] font-bold px-2 py-0.5 rounded-full bg-slate-100 text-slate-700">
+            <span className="text-[10px] font-bold px-2 py-0.5 rounded-md bg-slate-100 text-slate-700">
               {badgeText}
             </span>
           )}

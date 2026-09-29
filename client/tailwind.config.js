@@ -30,8 +30,8 @@ export default {
         }
       },
       fontFamily: {
-        sans: ['Hind Siliguri', 'Inter', 'system-ui', 'sans-serif'],
-        bengali: ['Hind Siliguri', 'sans-serif'],
+        sans: ['Noto Sans Bengali', 'Hind Siliguri', 'Inter', 'system-ui', 'sans-serif'],
+        bengali: ['Noto Sans Bengali', 'Hind Siliguri', 'sans-serif'],
       },
       boxShadow: {
         'card': '0 4px 20px -2px rgba(15, 81, 50, 0.08), 0 2px 6px -1px rgba(0, 0, 0, 0.04)',

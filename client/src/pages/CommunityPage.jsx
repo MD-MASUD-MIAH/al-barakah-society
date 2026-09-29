@@ -7,7 +7,7 @@ export const CommunityPage = () => {
   const { onlineCount, user } = useAuth();
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6">
       <div>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">
           <MessageCircle className="w-6 h-6 text-emerald-800" />

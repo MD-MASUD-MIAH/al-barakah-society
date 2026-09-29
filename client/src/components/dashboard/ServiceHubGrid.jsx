@@ -27,173 +27,171 @@ export const ServiceHubGrid = ({
   onOpenCommunity,
   onOpenShariahPolicy,
   onOpenMyDeposits,
-  isApproved,
-  isAdmin,
+  _isApproved,
+  _isAdmin,
 }) => {
-  const cards = [
+  // Primary Services (Group 1 - Banking/Transactions)
+  const primaryServices = [
     {
       id: 'balance',
-      title: 'সোসাইটি ফান্ড হিসাব',
-      subtitle: 'সোসাইটির মোট ব্যালেন্স',
+      label: 'সোসাইটি ফান্ড',
       icon: Wallet,
-      iconBg: 'bg-emerald-500/15 text-emerald-700 border-emerald-400/40',
-      badgeColor: 'text-emerald-800',
+      iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
       onClick: onOpenBalance,
     },
     {
-      id: 'active-members',
-      title: 'সক্রিয় সদস্য তালিকা',
-      subtitle: 'অনুমোদিত সদস্য ডিরেক্টরি',
-      icon: Users,
-      iconBg: 'bg-blue-500/15 text-blue-700 border-blue-400/40',
-      badgeColor: 'text-blue-800',
-      onClick: onOpenActiveMembers,
-    },
-    {
-      id: 'this-month',
-      title: 'চলতি মাসের জমা',
-      subtitle: 'বর্তমান মাসের মোট আদায়',
-      icon: CalendarCheck,
-      iconBg: 'bg-amber-500/15 text-amber-700 border-amber-400/40',
-      badgeColor: 'text-amber-800',
-      onClick: onOpenThisMonth,
-    },
-    {
       id: 'record-deposit',
-      title: 'নতুন জমা রেকর্ড',
-      subtitle: 'তহবিলে অর্থ এন্ট্রি করুন',
+      label: 'জমা রেকর্ড',
       icon: PlusCircle,
-      iconBg: 'bg-rose-500/15 text-rose-700 border-rose-400/40',
-      badgeColor: 'text-rose-800',
+      iconBg: 'bg-gold-50 text-amber-700 border-amber-200/60',
       onClick: onOpenDepositModal,
     },
     {
       id: 'ledger',
-      title: 'আর্থিক লেজার খতিয়ান',
-      subtitle: 'সকল জমার পুঙ্খানুপুঙ্খ বিবরণ',
+      label: 'লেজার খতিয়ান',
       icon: Receipt,
-      iconBg: 'bg-teal-500/15 text-teal-700 border-teal-400/40',
-      badgeColor: 'text-teal-800',
+      iconBg: 'bg-teal-50 text-teal-700 border-teal-200/60',
       onClick: onOpenLedger,
     },
     {
-      id: 'leaderboard',
-      title: 'শীর্ষ সঞ্চয়কারী',
-      subtitle: 'সর্বোচ্চ তহবিল জমাকারী তালিকা',
-      icon: Award,
-      iconBg: 'bg-yellow-500/15 text-yellow-700 border-yellow-400/40',
-      badgeColor: 'text-yellow-800',
-      onClick: onOpenLeaderboard,
-    },
-    {
-      id: 'membership-apply',
-      title: 'সদস্যপদ আবেদন',
-      subtitle: 'নতুন মেম্বারশিপ নিবন্ধন ফরম',
-      icon: FileCheck2,
-      iconBg: 'bg-indigo-500/15 text-indigo-700 border-indigo-400/40',
-      badgeColor: 'text-indigo-800',
-      onClick: onOpenApplyMembership,
-    },
-    {
-      id: 'notice-board',
-      title: 'নোটিশ ও ঘোষণা',
-      subtitle: 'সোসাইটির জরুরি আপডেট',
-      icon: Megaphone,
-      iconBg: 'bg-purple-500/15 text-purple-700 border-purple-400/40',
-      badgeColor: 'text-purple-800',
-      onClick: onOpenNoticeBoard,
-    },
-    {
-      id: 'receipt-finder',
-      title: 'ডিজিটাল রসিদ প্রিন্ট',
-      subtitle: 'মানি রিসিট অনুসন্ধান ও প্রিন্ট',
-      icon: Printer,
-      iconBg: 'bg-cyan-500/15 text-cyan-700 border-cyan-400/40',
-      badgeColor: 'text-cyan-800',
-      onClick: onOpenReceiptFinder,
-    },
-    {
-      id: 'community',
-      title: 'কমিউনিটি চ্যাট',
-      subtitle: 'সদস্যদের উন্মুক্ত আলোচনা ফোরাম',
-      icon: MessageSquareText,
-      iconBg: 'bg-pink-500/15 text-pink-700 border-pink-400/40',
-      badgeColor: 'text-pink-800',
-      onClick: onOpenCommunity,
-    },
-    {
-      id: 'shariah',
-      title: 'শরীয়াহ ও নীতিমালা',
-      subtitle: 'সুদমুক্ত আমানতের শর্তাবলী',
-      icon: ShieldCheck,
-      iconBg: 'bg-emerald-500/15 text-emerald-800 border-emerald-500/40',
-      badgeColor: 'text-emerald-900',
-      onClick: onOpenShariahPolicy,
-    },
-    {
       id: 'my-deposits',
-      title: 'আমার জমার স্টেটমেন্ট',
-      subtitle: 'ব্যক্তিগত জমার স্থিতি ও হিসাব',
+      label: 'আমার জমা',
       icon: TrendingUp,
-      iconBg: 'bg-violet-500/15 text-violet-700 border-violet-400/40',
-      badgeColor: 'text-violet-800',
+      iconBg: 'bg-blue-50 text-blue-700 border-blue-200/60',
       onClick: onOpenMyDeposits,
     },
   ];
 
+  // Secondary Services (Group 2 - Community & Administration)
+  const secondaryServices = [
+    {
+      id: 'active-members',
+      label: 'সদস্য তালিকা',
+      icon: Users,
+      iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/60',
+      onClick: onOpenActiveMembers,
+    },
+    {
+      id: 'this-month',
+      label: 'চলতি মাস',
+      icon: CalendarCheck,
+      iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60',
+      onClick: onOpenThisMonth,
+    },
+    {
+      id: 'leaderboard',
+      label: 'সেরা সঞ্চয়ী',
+      icon: Award,
+      iconBg: 'bg-amber-50 text-amber-700 border-amber-200/60',
+      onClick: onOpenLeaderboard,
+    },
+    {
+      id: 'receipt-finder',
+      label: 'রসিদ প্রিন্ট',
+      icon: Printer,
+      iconBg: 'bg-cyan-50 text-cyan-700 border-cyan-200/60',
+      onClick: onOpenReceiptFinder,
+    },
+    {
+      id: 'membership-apply',
+      label: 'সদস্য আবেদন',
+      icon: FileCheck2,
+      iconBg: 'bg-sky-50 text-sky-700 border-sky-200/60',
+      onClick: onOpenApplyMembership,
+    },
+    {
+      id: 'notice-board',
+      label: 'নোটিশ বোর্ড',
+      icon: Megaphone,
+      iconBg: 'bg-purple-50 text-purple-700 border-purple-200/60',
+      onClick: onOpenNoticeBoard,
+    },
+    {
+      id: 'community',
+      label: 'কমিউনিটি',
+      icon: MessageSquareText,
+      iconBg: 'bg-pink-50 text-pink-700 border-pink-200/60',
+      onClick: onOpenCommunity,
+    },
+    {
+      id: 'shariah',
+      label: 'শরীয়াহ নীতি',
+      icon: ShieldCheck,
+      iconBg: 'bg-emerald-50 text-emerald-800 border-emerald-300/60',
+      onClick: onOpenShariahPolicy,
+    },
+  ];
+
   return (
-    <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <div>
-          <h2 className="text-sm sm:text-base font-bold text-slate-900 tracking-tight flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-700"></span>
-            <span>সোসাইটি সার্ভিস ও অ্যাকশন হাব (Interactive Service Hub)</span>
-          </h2>
-          <p className="text-[11px] text-slate-500 font-medium">
-            যে তথ্যটি বা সেবাটি দেখতে চান সরাসরি সেই কার্ডে ক্লিক করুন
-          </p>
+    <div className="space-y-4">
+      {/* Clean Section 1: Financial & Core Services (Cellfin Card Style) */}
+      <div className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs">
+        <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            আর্থিক সেবা ও কার্যক্রম
+          </span>
+          <span className="text-[11px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">
+            তহবিল ও সঞ্চয়
+          </span>
         </div>
-        <span className="text-[11px] font-semibold text-emerald-900 bg-emerald-100/70 px-2.5 py-1 rounded-[6px]">
-          ১২ টি ফিচার
-        </span>
+
+        <div className="grid grid-cols-4 gap-2 sm:gap-4">
+          {primaryServices.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={item.onClick}
+                className="group flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg hover:bg-slate-50 transition-all duration-150 cursor-pointer focus:outline-none"
+              >
+                <div
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center border mb-2 transition-transform duration-200 group-hover:scale-108 group-active:scale-95 shadow-2xs ${item.iconBg}`}
+                >
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
+                </div>
+                <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-emerald-900 transition-colors text-center leading-tight">
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      {/* Grid of Reference-Style Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-        {cards.map((item, index) => {
-          const Icon = item.icon;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              onClick={item.onClick}
-              style={{ animationDelay: `${index * 35}ms` }}
-              className="aos-card-item group relative flex flex-col items-center justify-center p-4 sm:p-5 bg-white hover:bg-slate-50/80 border border-slate-200/90 hover:border-emerald-700/60 rounded-[6px] shadow-none transition-all duration-200 hover:-translate-y-0.5 text-center focus:outline-none focus:ring-2 focus:ring-emerald-700/30 cursor-pointer min-h-[125px] sm:min-h-[140px]"
-            >
-              {/* Centered Colored Icon Badge (Matching User Reference) */}
-              <div
-                className={`w-11 h-11 sm:w-12 sm:h-12 rounded-[6px] flex items-center justify-center border mb-2.5 transition-transform duration-200 group-hover:scale-110 ${item.iconBg}`}
+      {/* Clean Section 2: Society & Community Services (Cellfin Card Style) */}
+      <div className="bg-white rounded-xl p-4 sm:p-6 border border-slate-200/90 shadow-2xs">
+        <div className="flex items-center justify-between mb-4 pb-2 border-b border-slate-100">
+          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">
+            সোসাইটি পোর্টাল ও ফিচারসমূহ
+          </span>
+          <span className="text-[11px] text-slate-500 font-medium">
+            সদস্য সেবা
+          </span>
+        </div>
+
+        <div className="grid grid-cols-4 gap-2 sm:gap-4">
+          {secondaryServices.map((item) => {
+            const Icon = item.icon;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                onClick={item.onClick}
+                className="group flex flex-col items-center justify-center p-2 sm:p-3 rounded-lg hover:bg-slate-50 transition-all duration-150 cursor-pointer focus:outline-none"
               >
-                <Icon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
-              </div>
-
-              {/* Title Underneath */}
-              <span className="text-xs sm:text-sm font-bold text-slate-800 group-hover:text-emerald-950 transition-colors leading-tight">
-                {item.title}
-              </span>
-
-              {/* Subtitle */}
-              <span className="text-[10px] text-slate-400 group-hover:text-slate-600 mt-1 line-clamp-1 transition-colors">
-                {item.subtitle}
-              </span>
-
-              {/* Subtle hover indicator */}
-              <span className="absolute bottom-1.5 right-2 opacity-0 group-hover:opacity-100 text-[10px] text-emerald-700 font-semibold transition-opacity">
-                →
-              </span>
-            </button>
-          );
-        })}
+                <div
+                  className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full flex items-center justify-center border mb-2 transition-transform duration-200 group-hover:scale-108 group-active:scale-95 shadow-2xs ${item.iconBg}`}
+                >
+                  <Icon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
+                </div>
+                <span className="text-xs sm:text-sm font-semibold text-slate-800 group-hover:text-emerald-900 transition-colors text-center leading-tight">
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
       </div>
     </div>
   );

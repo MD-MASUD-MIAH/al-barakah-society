@@ -139,7 +139,7 @@ export const LedgerPage = () => {
   const currentTotal = deposits.reduce((sum, d) => sum + (d.status === 'verified' ? d.amount : 0), 0);
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6">
       {/* Top Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>

@@ -81,7 +81,7 @@ export const AdminMembersPage = () => {
   };
 
   return (
-    <div className="space-y-6 pb-12">
+    <div className="space-y-6">
       {/* Header */}
       <div>
         <h1 className="text-2xl font-bold text-slate-900 flex items-center gap-2">

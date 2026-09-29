@@ -21,10 +21,13 @@ import { NoticesPage } from './pages/NoticesPage';
 import { ShariahPolicyPage } from './pages/ShariahPolicyPage';
 import { ReceiptsPage } from './pages/ReceiptsPage';
 import { AddDepositPage } from './pages/AddDepositPage';
+import { ScrollToTop } from './components/common/ScrollToTop';
 
 function App() {
   return (
-    <Routes>
+    <>
+      <ScrollToTop />
+      <Routes>
       {/* Public Auth Routes */}
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
@@ -98,6 +101,7 @@ function App() {
       {/* Fallback */}
       <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
+    </>
   );
 }
 

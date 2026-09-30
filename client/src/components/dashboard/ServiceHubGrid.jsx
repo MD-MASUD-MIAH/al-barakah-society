@@ -59,7 +59,10 @@ export const ServiceHubGrid = ({
         <div className={`w-11 h-11 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center border flex-shrink-0 transition-transform duration-200 group-hover:scale-105 group-active:scale-95 shadow-2xs ${item.iconBg}`}>
           <Icon className="w-5 h-5 sm:w-6 sm:h-6 shrink-0" />
         </div>
-        <span className="text-[9px] leading-tight sm:text-xs font-semibold text-slate-700 group-hover:text-emerald-900 transition-colors text-center w-full line-clamp-2">
+        <span
+          className="text-[9px] leading-tight sm:text-xs font-semibold text-slate-700 group-hover:text-emerald-900 transition-colors text-center w-full line-clamp-2 mt-[5px]"
+          style={{ wordBreak: 'keep-all', overflowWrap: 'break-word' }}
+        >
           {item.label}
         </span>
       </button>

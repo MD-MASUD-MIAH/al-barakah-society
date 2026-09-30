@@ -37,15 +37,15 @@ export const MyDepositsPage = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
-          <Link
-            to="/dashboard"
-            className="p-2 bg-white hover:bg-slate-100 border border-slate-200 rounded-[6px] text-slate-600 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <TrendingUp className="w-6 h-6 text-emerald-800" />
+              <Link
+                to="/dashboard"
+                className="text-slate-500 hover:text-emerald-800 transition-colors"
+                title="ড্যাশবোর্ডে ফিরে যান"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </Link>
               <span>আমার জমার স্টেটমেন্ট (My Deposit Statement)</span>
             </h1>
             <p className="text-xs text-slate-500 font-medium mt-0.5">

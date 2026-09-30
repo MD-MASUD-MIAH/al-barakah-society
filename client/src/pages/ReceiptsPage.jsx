@@ -47,16 +47,16 @@ export const ReceiptsPage = () => {
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
         <div className="flex items-center gap-3">
-          <Link
-            to="/dashboard"
-            className="p-2 bg-white hover:bg-slate-100 border border-slate-200 rounded-[6px] text-slate-600 transition-colors"
-          >
-            <ArrowLeft className="w-5 h-5" />
-          </Link>
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <Printer className="w-6 h-6 text-cyan-700" />
-              <span>ডিজিটাল রসিদ ও ভাউচার (Official Receipts & Print)</span>
+              <Link
+                to="/dashboard"
+                className="text-slate-500 hover:text-emerald-800 transition-colors"
+                title="ড্যাশবোর্ডে ফিরে যান"
+              >
+                <ArrowLeft className="w-6 h-6" />
+              </Link>
+              <span>ডিজিটাল রসিদ ও ভাউচার (Official Receipts &amp; Print)</span>
             </h1>
             <p className="text-xs text-slate-500 font-medium mt-0.5">
               যেকোনো জমার অফিসিয়াল ডিজিটাল রসিদ অনুসন্ধান ও তাৎক্ষণিক প্রিন্ট

@@ -32,33 +32,34 @@ export const ShariahPolicyPage = () => {
     <div className="max-w-4xl mx-auto py-4 sm:py-8 px-2 sm:px-4 space-y-6">
       {/* Top Navigation & Action Header (Hidden in Print) */}
       <div className="print:hidden flex items-center justify-between gap-3 pb-4 border-b border-slate-200">
-        <div className="flex items-center gap-3">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <Link
-                to="/dashboard"
-                className="text-slate-500 hover:text-emerald-800 transition-colors"
-                title="ড্যাশবোর্ডে ফিরে যান"
-              >
-                <ArrowLeft className="w-6 h-6" />
-              </Link>
-              <span>শরীয়াহ নীতিমালা ও আমানত শর্তাবলী</span>
-            </h1>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
-              আল-বারাকাহ বহুমুখী সমবায় সমিতি — অফিসিয়াল নীতিমালা ও অঙ্গীকারনামা
-            </p>
-          </div>
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
+            শরীয়াহ নীতিমালা ও আমানত শর্তাবলী
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            আল-বারাকাহ বহুমুখী সমবায় সমিতি — অফিসিয়াল নীতিমালা ও অঙ্গীকারনামা
+          </p>
         </div>
 
-        <button
-          type="button"
-          onClick={handlePrint}
-          className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs rounded-[6px] transition-all border border-slate-300"
-          title="নীতিমালা প্রিন্ট বা PDF ডাউনলোড করুন"
-        >
-          <Printer className="w-4 h-4 text-emerald-800" />
-          <span>প্রিন্ট / PDF</span>
-        </button>
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={handlePrint}
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs rounded-[6px] transition-all border border-slate-300"
+            title="নীতিমালা প্রিন্ট বা PDF ডাউনলোড করুন"
+          >
+            <Printer className="w-4 h-4 text-emerald-800" />
+            <span>প্রিন্ট / PDF</span>
+          </button>
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-900 hover:bg-emerald-800 text-white text-xs font-semibold rounded-[6px] border border-emerald-700 transition-all shadow-sm"
+            title="ড্যাশবোর্ডে ফিরে যান"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>ফিরে যান</span>
+          </Link>
+        </div>
       </div>
 
       {/* 

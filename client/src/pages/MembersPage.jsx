@@ -39,25 +39,16 @@ export const MembersPage = () => {
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-        <div className="flex items-center gap-3">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <Link
-                to="/dashboard"
-                className="text-slate-500 hover:text-emerald-800 transition-colors"
-                title="ড্যাশবোর্ডে ফিরে যান"
-              >
-                <ArrowLeft className="w-6 h-6" />
-              </Link>
-              <span>অনুমোদিত সোসাইটি সদস্যবৃন্দ (Active Members)</span>
-            </h1>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
-              আল-বারাকাহ সোসাইটির সক্রিয় ও যাচাইকৃত সদস্য তালিকা
-            </p>
-          </div>
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
+            অনুমোদিত সোসাইটি সদস্যবৃন্দ (Active Members)
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            আল-বারাকাহ সোসাইটির সক্রিয় ও যাচাইকৃত সদস্য তালিকা
+          </p>
         </div>
 
-        <div className="flex items-center gap-3">
+        <div className="flex items-center gap-2 self-start sm:self-auto">
           <span className="px-3 py-1.5 bg-emerald-100 text-emerald-900 text-xs font-bold rounded-[6px]">
             মোট: {members.length} জন
           </span>
@@ -68,6 +59,14 @@ export const MembersPage = () => {
             <RefreshCw className={`w-3.5 h-3.5 ${loading ? 'animate-spin' : ''}`} />
             <span>রিফ্রেশ</span>
           </button>
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-900 hover:bg-emerald-800 text-white text-xs font-semibold rounded-[6px] border border-emerald-700 transition-all shadow-sm"
+            title="ড্যাশবোর্ডে ফিরে যান"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>ফিরে যান</span>
+          </Link>
         </div>
       </div>
 

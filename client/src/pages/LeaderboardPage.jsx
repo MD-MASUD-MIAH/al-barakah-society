@@ -59,31 +59,32 @@ export const LeaderboardPage = () => {
     <div className="space-y-6">
       {/* Page Header */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4 border-b border-slate-200">
-        <div className="flex items-center gap-3">
-          <div>
-            <h1 className="text-xl sm:text-2xl font-bold text-slate-900 flex items-center gap-2">
-              <Link
-                to="/dashboard"
-                className="text-slate-500 hover:text-emerald-800 transition-colors"
-                title="ড্যাশবোর্ডে ফিরে যান"
-              >
-                <ArrowLeft className="w-6 h-6" />
-              </Link>
-              <span>শীর্ষ সঞ্চয়কারী লিডারবোর্ড (Top Savers Leaderboard)</span>
-            </h1>
-            <p className="text-xs text-slate-500 font-medium mt-0.5">
-              সোসাইটির সর্বোচ্চ তহবিল জমাকারী সম্মানিত সদস্যবৃন্দের তালিকা
-            </p>
-          </div>
+        <div>
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-900">
+            শীর্ষ সঞ্চয়কারী লিডারবোর্ড (Top Savers Leaderboard)
+          </h1>
+          <p className="text-xs text-slate-500 font-medium mt-0.5">
+            সোসাইটির সর্বোচ্চ তহবিল জমাকারী সম্মানিত সদস্যবৃন্দের তালিকা
+          </p>
         </div>
 
-        <button
-          onClick={fetchLeaderboard}
-          className="flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-[6px] border border-slate-300 transition-all self-start sm:self-auto"
-        >
-          <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-          <span>রিফ্রেশ</span>
-        </button>
+        <div className="flex items-center gap-2 self-start sm:self-auto">
+          <button
+            onClick={fetchLeaderboard}
+            className="flex items-center gap-2 px-3.5 py-2 bg-white hover:bg-slate-50 text-slate-700 text-xs font-semibold rounded-[6px] border border-slate-300 transition-all"
+          >
+            <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+            <span>রিফ্রেশ</span>
+          </button>
+          <Link
+            to="/dashboard"
+            className="flex items-center gap-1.5 px-3.5 py-2 bg-emerald-900 hover:bg-emerald-800 text-white text-xs font-semibold rounded-[6px] border border-emerald-700 transition-all shadow-sm"
+            title="ড্যাশবোর্ডে ফিরে যান"
+          >
+            <ArrowLeft className="w-4 h-4" />
+            <span>ফিরে যান</span>
+          </Link>
+        </div>
       </div>
 
       {/* Leaderboard List */}

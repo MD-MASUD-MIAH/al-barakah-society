@@ -31,21 +31,21 @@ export const ServiceHubGrid = ({
   _isAdmin,
 }) => {
   const primaryServices = [
-    { id: 'balance', label: '??????? ?????', icon: Wallet, iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60', onClick: onOpenBalance },
-    { id: 'record-deposit', label: '??? ??????', icon: PlusCircle, iconBg: 'bg-gold-50 text-amber-700 border-amber-200/60', onClick: onOpenDepositModal },
-    { id: 'ledger', label: '????? ???????', icon: Receipt, iconBg: 'bg-teal-50 text-teal-700 border-teal-200/60', onClick: onOpenLedger },
-    { id: 'my-deposits', label: '???? ???', icon: TrendingUp, iconBg: 'bg-blue-50 text-blue-700 border-blue-200/60', onClick: onOpenMyDeposits },
+    { id: 'balance', label: 'সোসাইটি ফান্ড', icon: Wallet, iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60', onClick: onOpenBalance },
+    { id: 'record-deposit', label: 'জমা রেকর্ড', icon: PlusCircle, iconBg: 'bg-gold-50 text-amber-700 border-amber-200/60', onClick: onOpenDepositModal },
+    { id: 'ledger', label: 'লেজার খতিয়ান', icon: Receipt, iconBg: 'bg-teal-50 text-teal-700 border-teal-200/60', onClick: onOpenLedger },
+    { id: 'my-deposits', label: 'আমার জমা', icon: TrendingUp, iconBg: 'bg-blue-50 text-blue-700 border-blue-200/60', onClick: onOpenMyDeposits },
   ];
 
   const secondaryServices = [
-    { id: 'active-members', label: '????? ??????', icon: Users, iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/60', onClick: onOpenActiveMembers },
-    { id: 'this-month', label: '???? ???', icon: CalendarCheck, iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60', onClick: onOpenThisMonth },
-    { id: 'leaderboard', label: '???? ???????', icon: Award, iconBg: 'bg-amber-50 text-amber-700 border-amber-200/60', onClick: onOpenLeaderboard },
-    { id: 'receipt-finder', label: '???? ???????', icon: Printer, iconBg: 'bg-cyan-50 text-cyan-700 border-cyan-200/60', onClick: onOpenReceiptFinder },
-    { id: 'membership-apply', label: '????? ????', icon: FileCheck2, iconBg: 'bg-sky-50 text-sky-700 border-sky-200/60', onClick: onOpenApplyMembership },
-    { id: 'notice-board', label: '????? ?????', icon: Megaphone, iconBg: 'bg-purple-50 text-purple-700 border-purple-200/60', onClick: onOpenNoticeBoard },
-    { id: 'community', label: '????????', icon: MessageSquareText, iconBg: 'bg-pink-50 text-pink-700 border-pink-200/60', onClick: onOpenCommunity },
-    { id: 'shariah', label: '??????? ????', icon: ShieldCheck, iconBg: 'bg-emerald-50 text-emerald-800 border-emerald-300/60', onClick: onOpenShariahPolicy },
+    { id: 'active-members', label: 'সদস্য তালিকা', icon: Users, iconBg: 'bg-indigo-50 text-indigo-700 border-indigo-200/60', onClick: onOpenActiveMembers },
+    { id: 'this-month', label: 'চলতি মাস', icon: CalendarCheck, iconBg: 'bg-emerald-50 text-emerald-700 border-emerald-200/60', onClick: onOpenThisMonth },
+    { id: 'leaderboard', label: 'সেরা সঞ্চয়ী', icon: Award, iconBg: 'bg-amber-50 text-amber-700 border-amber-200/60', onClick: onOpenLeaderboard },
+    { id: 'receipt-finder', label: 'রসিদ প্রিন্ট', icon: Printer, iconBg: 'bg-cyan-50 text-cyan-700 border-cyan-200/60', onClick: onOpenReceiptFinder },
+    { id: 'membership-apply', label: 'আবেদন ফর্ম', icon: FileCheck2, iconBg: 'bg-sky-50 text-sky-700 border-sky-200/60', onClick: onOpenApplyMembership },
+    { id: 'notice-board', label: 'নোটিশ বোর্ড', icon: Megaphone, iconBg: 'bg-purple-50 text-purple-700 border-purple-200/60', onClick: onOpenNoticeBoard },
+    { id: 'community', label: 'কমিউনিটি', icon: MessageSquareText, iconBg: 'bg-pink-50 text-pink-700 border-pink-200/60', onClick: onOpenCommunity },
+    { id: 'shariah', label: 'শরীয়াহ নীতি', icon: ShieldCheck, iconBg: 'bg-emerald-50 text-emerald-800 border-emerald-300/60', onClick: onOpenShariahPolicy },
   ];
 
   const ServiceCard = ({ item }) => {
@@ -70,8 +70,8 @@ export const ServiceHubGrid = ({
     <div className="space-y-4">
       <div className="bg-white rounded-xl p-3 sm:p-6 border border-slate-200/90 shadow-2xs">
         <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
-          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">?????? ???? ? ?????????</span>
-          <span className="text-[11px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">????? ? ??????</span>
+          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">আর্থিক সেবা ও কার্যক্রম</span>
+          <span className="text-[11px] text-emerald-800 font-semibold bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200/60">তহবিল ও সঞ্চয়</span>
         </div>
         <div className="grid grid-cols-4 gap-1 sm:gap-4">
           {primaryServices.map((item) => (<ServiceCard key={item.id} item={item} />))}
@@ -80,8 +80,8 @@ export const ServiceHubGrid = ({
 
       <div className="bg-white rounded-xl p-3 sm:p-6 border border-slate-200/90 shadow-2xs">
         <div className="flex items-center justify-between mb-3 pb-2 border-b border-slate-100">
-          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">??????? ??????? ? ?????????</span>
-          <span className="text-[11px] text-slate-500 font-medium">????? ????</span>
+          <span className="text-xs font-bold text-slate-800 uppercase tracking-wider">সোসাইটি পোর্টাল ও ফিচারসমূহ</span>
+          <span className="text-[11px] text-slate-500 font-medium">সদস্য সেবা</span>
         </div>
         <div className="grid grid-cols-4 gap-1 sm:gap-4">
           {secondaryServices.map((item) => (<ServiceCard key={item.id} item={item} />))}

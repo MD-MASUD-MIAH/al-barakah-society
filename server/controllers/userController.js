@@ -68,7 +68,7 @@ exports.getPendingUsers = async (req, res) => {
 exports.getApprovedMembers = async (req, res) => {
   try {
     const approvedMembers = await User.find({ status: 'approved' })
-      .select('name email phone avatar totalDeposited role createdAt')
+      .select('name email phone avatar totalDeposited role createdAt membershipDetails')
       .sort({ name: 1 });
 
     res.status(200).json({

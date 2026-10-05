@@ -922,7 +922,7 @@ export const ApplyMembershipPage = () => {
               disabled={loading}
               className="w-full sm:w-auto px-7 py-3 rounded-[6px] bg-emerald-900 hover:bg-emerald-950 text-gold-300 font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md disabled:opacity-50"
             >
-              <span>{loading ? 'আবেদন দাখিল হচ্ছে...' : 'সদস্য ভর্তি আবেদন দাখিল করুন'}</span>
+              <span>{loading ? 'আবেদন জমা হচ্ছে...' : 'আবেদন জমা'}</span>
               <ArrowRight className="w-4 h-4 text-gold-400" />
             </button>
           )}

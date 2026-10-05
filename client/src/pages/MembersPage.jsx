@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { Users, Search, Phone, Mail, ArrowLeft, RefreshCw, CheckCircle2 } from 'lucide-react';
+import { Users, Search, Phone, Mail, ArrowLeft, RefreshCw, CheckCircle2, FileText } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import api from '../services/api';
 import { formatCurrency, formatDate } from '../utils/formatters';
+import { MemberApplicationModal } from '../components/members/MemberApplicationModal';
 
 export const MembersPage = () => {
   const [members, setMembers] = useState([]);
   const [search, setSearch] = useState('');
   const [loading, setLoading] = useState(true);
+  const [selectedMember, setSelectedMember] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   useEffect(() => {
     fetchMembers();
@@ -28,6 +31,11 @@ export const MembersPage = () => {
     }
   };
 
+  const handleCardClick = (member) => {
+    setSelectedMember(member);
+    setIsModalOpen(true);
+  };
+
   const filtered = members.filter(
     (m) =>
       m.name?.toLowerCase().includes(search.toLowerCase()) ||
@@ -44,7 +52,7 @@ export const MembersPage = () => {
             অনুমোদিত সোসাইটি সদস্যবৃন্দ (Active Members)
           </h1>
           <p className="text-xs text-slate-500 font-medium mt-0.5">
-            আল-বারাকাহ সোসাইটির সক্রিয় ও যাচাইকৃত সদস্য তালিকা
+            আল-বারাকাহ সোসাইটির সক্রিয় ও যাচাইকৃত সদস্য তালিকা (ফরম দেখতে কার্ডে ক্লিক করুন)
           </p>
         </div>
 
@@ -96,17 +104,21 @@ export const MembersPage = () => {
           {filtered.map((m) => (
             <div
               key={m._id}
-              className="bg-white rounded-[6px] p-5 border border-slate-200 shadow-none space-y-3 hover:border-emerald-600/50 transition-colors"
+              onClick={() => handleCardClick(m)}
+              className="bg-white rounded-[6px] p-5 border border-slate-200 shadow-none space-y-3 hover:border-emerald-700 hover:shadow-md transition-all cursor-pointer group relative"
+              title="আবেদন ফরম দেখতে ক্লিক করুন"
             >
               <div className="flex items-center gap-3">
                 <img
                   src={m.avatar || `https://ui-avatars.com/api/?name=${encodeURIComponent(m.name)}&background=047857&color=fff`}
                   alt={m.name}
-                  className="w-12 h-12 rounded-full aspect-square object-cover border border-emerald-700/30"
+                  className="w-12 h-12 rounded-full aspect-square object-cover border border-emerald-700/30 ring-2 ring-transparent group-hover:ring-emerald-600/30 transition-all"
                 />
                 <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-1.5">
-                    <h3 className="font-bold text-sm text-slate-900 truncate">{m.name}</h3>
+                    <h3 className="font-bold text-sm text-slate-900 truncate group-hover:text-emerald-900 transition-colors">
+                      {m.name}
+                    </h3>
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" />
                   </div>
                   <p className="text-[11px] text-slate-500 truncate">{m.email}</p>
@@ -132,10 +144,31 @@ export const MembersPage = () => {
                   <span className="text-[11px] text-slate-500">{formatDate(m.createdAt)}</span>
                 </div>
               </div>
+
+              {/* View Application Form Prompt */}
+              <div className="pt-2 border-t border-slate-100 flex items-center justify-between text-xs">
+                <span className="text-emerald-800 font-bold group-hover:text-emerald-950 flex items-center gap-1.5 transition-colors">
+                  <FileText className="w-3.5 h-3.5 text-emerald-700" />
+                  <span>আবেদন ফরম দেখুন</span>
+                </span>
+                <span className="text-[11px] text-slate-400 group-hover:text-emerald-700 font-semibold transition-colors">
+                  ক্লিক করুন &rarr;
+                </span>
+              </div>
             </div>
           ))}
         </div>
       )}
+
+      {/* Member Application Form Modal */}
+      <MemberApplicationModal
+        isOpen={isModalOpen}
+        onClose={() => {
+          setIsModalOpen(false);
+          setSelectedMember(null);
+        }}
+        member={selectedMember}
+      />
     </div>
   );
 };

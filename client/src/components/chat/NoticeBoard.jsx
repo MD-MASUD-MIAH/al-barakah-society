@@ -156,21 +156,11 @@ export const NoticeBoard = ({ fullHeight = false }) => {
     >
       {/* Noticeboard Header */}
       <div className="bg-gradient-to-r from-emerald-900 to-emerald-950 px-5 py-3.5 text-white flex items-center justify-between border-b-2 border-gold-500/40">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-[6px] bg-gold-500 text-emerald-950 flex items-center justify-center font-bold">
-            <Megaphone className="w-4 h-4 text-emerald-950" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2">
-              <h3 className="font-bold text-sm sm:text-base text-white">কমিউনিটি নোটিশ ও বার্তা বোর্ড</h3>
-              <span className="px-2 py-0.5 rounded-[4px] bg-emerald-800 text-[10px] text-gold-300 font-semibold border border-gold-500/30">
-                সবাই দেখতে পাবে
-              </span>
-            </div>
-            <p className="text-[11px] text-gold-300/90 font-medium">
-              সোসাইটির সদস্য ও প্রশাসনের উন্মুক্ত আলোচনা
-            </p>
-          </div>
+        <div>
+          <h3 className="font-bold text-sm sm:text-base text-white">কমিউনিটি নোটিশ ও বার্তা বোর্ড</h3>
+          <p className="text-[11px] text-gold-300/90 font-medium">
+            সোসাইটির সদস্য ও প্রশাসনের উন্মুক্ত আলোচনা
+          </p>
         </div>
 
         <button

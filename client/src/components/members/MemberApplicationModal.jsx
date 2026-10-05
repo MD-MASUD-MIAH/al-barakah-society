@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import {
   X,
   Printer,
@@ -14,9 +14,18 @@ import {
 import { formatDate, formatCurrency } from '../../utils/formatters';
 
 export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
+  const [isClosing, setIsClosing] = useState(false);
   const formRef = useRef(null);
 
   if (!isOpen || !member) return null;
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 200);
+  };
 
   const mDetails = member.membershipDetails || {};
   const formNo = mDetails.formNo || `ABS-${(member._id ? member._id.slice(-6) : '100001').toUpperCase()}`;
@@ -72,11 +81,15 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/70 backdrop-blur-xs overflow-y-auto"
-      onClick={onClose}
+      className={`fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto ${
+        isClosing ? 'aos-modal-backdrop-closing' : 'aos-modal-backdrop'
+      }`}
+      onClick={handleClose}
     >
       <div
-        className="bg-white rounded-[8px] border border-slate-200 shadow-2xl max-w-4xl w-full my-4 sm:my-auto flex flex-col max-h-[94vh] overflow-hidden"
+        className={`bg-white rounded-[6px] border border-slate-200 shadow-2xl max-w-4xl w-full my-4 sm:my-auto flex flex-col max-h-[94vh] overflow-hidden ${
+          isClosing ? 'aos-modal-content-closing' : 'aos-modal-content'
+        }`}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header Bar */}
@@ -110,7 +123,7 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
               <span className="hidden sm:inline">প্রিন্ট / PDF</span>
             </button>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="p-1.5 rounded-[6px] text-slate-300 hover:text-white hover:bg-emerald-800 transition-colors"
               title="বন্ধ করুন"
             >
@@ -472,7 +485,7 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
               <span>প্রিন্ট প্রিভিউ / PDF</span>
             </button>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               type="button"
               className="px-4 py-2 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-xs rounded-[6px] transition-colors"
             >

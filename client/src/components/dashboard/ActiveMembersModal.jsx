@@ -10,12 +10,21 @@ export const ActiveMembersModal = ({ isOpen, onClose }) => {
   const [search, setSearch] = useState('');
   const [selectedMember, setSelectedMember] = useState(null);
   const [isAppModalOpen, setIsAppModalOpen] = useState(false);
+  const [isClosing, setIsClosing] = useState(false);
 
   useEffect(() => {
     if (isOpen) {
       fetchMembers();
     }
   }, [isOpen]);
+
+  const handleClose = () => {
+    setIsClosing(true);
+    setTimeout(() => {
+      setIsClosing(false);
+      onClose();
+    }, 200);
+  };
 
   const fetchMembers = async () => {
     try {
@@ -47,8 +56,18 @@ export const ActiveMembersModal = ({ isOpen, onClose }) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs aos-modal-backdrop">
-        <div className="bg-white rounded-[6px] border border-slate-200 shadow-none max-w-xl w-full max-h-[85vh] flex flex-col overflow-hidden aos-modal-content">
+      <div
+        className={`fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs ${
+          isClosing ? 'aos-modal-backdrop-closing' : 'aos-modal-backdrop'
+        }`}
+        onClick={handleClose}
+      >
+        <div
+          className={`bg-white rounded-[6px] border border-slate-200 shadow-none max-w-xl w-full max-h-[85vh] flex flex-col overflow-hidden ${
+            isClosing ? 'aos-modal-content-closing' : 'aos-modal-content'
+          }`}
+          onClick={(e) => e.stopPropagation()}
+        >
           {/* Header */}
           <div className="flex items-center justify-between p-5 bg-gradient-to-r from-emerald-900 to-emerald-950 text-white shrink-0">
             <div className="flex items-center gap-3">
@@ -63,7 +82,7 @@ export const ActiveMembersModal = ({ isOpen, onClose }) => {
               </div>
             </div>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="p-1.5 rounded-[6px] text-white/80 hover:text-white hover:bg-emerald-800 transition-colors"
             >
               <X className="w-5 h-5" />
@@ -149,7 +168,7 @@ export const ActiveMembersModal = ({ isOpen, onClose }) => {
           {/* Footer */}
           <div className="p-3 bg-slate-50 border-t border-slate-200 text-right shrink-0">
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="px-4 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 text-xs font-semibold rounded-[6px]"
             >
               বন্ধ করুন

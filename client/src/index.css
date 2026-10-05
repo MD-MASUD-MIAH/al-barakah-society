@@ -54,7 +54,7 @@ img[alt*="ব্যবহারকারী"] {
   filter: brightness(0) invert(1) !important;
 }
 
-/* AOS (Smooth Animation On Open / Smooth Modal Vibe) */
+/* AOS (Smooth Animation On Open & Close / Smooth Modal Vibe) */
 @keyframes aos-modal-pop {
   0% {
     opacity: 0;
@@ -70,6 +70,17 @@ img[alt*="ব্যবহারকারী"] {
   }
 }
 
+@keyframes aos-modal-pop-out {
+  0% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.95) translateY(10px);
+  }
+}
+
 @keyframes aos-backdrop-fade {
   0% {
     opacity: 0;
@@ -78,6 +89,17 @@ img[alt*="ব্যবহারকারী"] {
   100% {
     opacity: 1;
     backdrop-filter: blur(6px);
+  }
+}
+
+@keyframes aos-backdrop-fade-out {
+  0% {
+    opacity: 1;
+    backdrop-filter: blur(6px);
+  }
+  100% {
+    opacity: 0;
+    backdrop-filter: blur(0px);
   }
 }
 
@@ -96,8 +118,18 @@ img[alt*="ব্যবহারকারী"] {
   animation: aos-backdrop-fade 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
+.aos-modal-backdrop-closing {
+  animation: aos-backdrop-fade-out 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
 .aos-modal-content {
   animation: aos-modal-pop 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  border-radius: 6px !important;
+  box-shadow: none !important;
+}
+
+.aos-modal-content-closing {
+  animation: aos-modal-pop-out 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
   border-radius: 6px !important;
   box-shadow: none !important;
 }

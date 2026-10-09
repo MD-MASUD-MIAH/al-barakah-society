@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef } from "react";
 import {
   X,
   Printer,
@@ -10,8 +10,8 @@ import {
   User as UserIcon,
   ShieldCheck,
   Building,
-} from 'lucide-react';
-import { formatDate, formatCurrency } from '../../utils/formatters';
+} from "lucide-react";
+import { formatDate, formatCurrency } from "../../utils/formatters";
 
 export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
   const [isClosing, setIsClosing] = useState(false);
@@ -28,17 +28,21 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
   };
 
   const mDetails = member.membershipDetails || {};
-  const formNo = mDetails.formNo || `ABS-${(member._id ? member._id.slice(-6) : '100001').toUpperCase()}`;
-  const admissionDate = mDetails.admissionDate || (member.createdAt ? formatDate(member.createdAt) : '');
+  const formNo =
+    mDetails.formNo ||
+    `ABS-${(member._id ? member._id.slice(-6) : "100001").toUpperCase()}`;
+  const admissionDate =
+    mDetails.admissionDate ||
+    (member.createdAt ? formatDate(member.createdAt) : "");
   const monthlyPledgeAmount = mDetails.monthlyPledge || 1000;
 
   const handlePrint = () => {
-    const printArea = document.getElementById('printable-member-form');
+    const printArea = document.getElementById("printable-member-form");
     if (!printArea) {
       window.print();
       return;
     }
-    const printWindow = window.open('', '_blank', 'width=900,height=900');
+    const printWindow = window.open("", "_blank", "width=900,height=900");
     printWindow.document.write(`
       <!DOCTYPE html>
       <html lang="bn">
@@ -82,13 +86,13 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
   return (
     <div
       className={`fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-slate-900/60 backdrop-blur-xs overflow-y-auto ${
-        isClosing ? 'aos-modal-backdrop-closing' : 'aos-modal-backdrop'
+        isClosing ? "aos-modal-backdrop-closing" : "aos-modal-backdrop"
       }`}
       onClick={handleClose}
     >
       <div
         className={`bg-white rounded-[6px] border border-slate-200 shadow-2xl max-w-4xl w-full my-4 sm:my-auto flex flex-col max-h-[94vh] overflow-hidden ${
-          isClosing ? 'aos-modal-content-closing' : 'aos-modal-content'
+          isClosing ? "aos-modal-content-closing" : "aos-modal-content"
         }`}
         onClick={(e) => e.stopPropagation()}
       >
@@ -182,10 +186,10 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
                       একত্রে গড়ি সঞ্চয়, বরকতময় সুদিনের নিশ্চয়
                     </div>
                     <p className="text-xs sm:text-sm font-bold text-slate-800">
-                      ঘড়িশার, নড়িয়া, শরীয়তপুর
+                      ঘড়িষার, নড়িয়া, শরীয়তপুর
                     </p>
                     <p className="text-[11px] sm:text-xs font-semibold text-slate-700">
-                      স্থাপিতঃ ২০২৩ ইং
+                      স্থাপিতঃ ২০২৬ ইং
                     </p>
                   </div>
 
@@ -205,7 +209,9 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
                         </div>
                       )}
                     </div>
-                    <span className="text-[10px] text-slate-500 font-medium mt-1">সদস্যের ছবি</span>
+                    <span className="text-[10px] text-slate-500 font-medium mt-1">
+                      সদস্যের ছবি
+                    </span>
                   </div>
                 </div>
               </div>
@@ -229,7 +235,7 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
                 <div className="flex items-center gap-1.5 text-xs sm:text-sm font-bold text-slate-900">
                   <span className="shrink-0">ভর্তির তারিখঃ</span>
                   <span className="px-2.5 py-0.5 bg-slate-100 border border-slate-300 rounded font-sans font-bold text-emerald-950">
-                    {admissionDate || '-'}
+                    {admissionDate || "-"}
                   </span>
                 </div>
               </div>
@@ -238,7 +244,9 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
               <div className="space-y-2.5 text-xs sm:text-sm pt-1">
                 {/* নাম */}
                 <div className="flex items-baseline gap-2 border-b border-dashed border-slate-300 pb-1">
-                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">নামঃ</span>
+                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                    নামঃ
+                  </span>
                   <span className="font-bold text-slate-950 text-sm sm:text-base flex-1">
                     {member.name}
                   </span>
@@ -246,117 +254,183 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
 
                 {/* পিতা/স্বামী */}
                 <div className="flex items-baseline gap-2 border-b border-dashed border-slate-300 pb-1">
-                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">পিতা/স্বামীঃ</span>
+                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                    পিতা/স্বামীঃ
+                  </span>
                   <span className="font-medium text-slate-900 flex-1">
-                    {mDetails.fatherOrHusbandName || '-'}
+                    {mDetails.fatherOrHusbandName || "-"}
                   </span>
                 </div>
 
                 {/* মাতা */}
                 <div className="flex items-baseline gap-2 border-b border-dashed border-slate-300 pb-1">
-                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">মাতাঃ</span>
+                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                    মাতাঃ
+                  </span>
                   <span className="font-medium text-slate-900 flex-1">
-                    {mDetails.motherName || '-'}
+                    {mDetails.motherName || "-"}
                   </span>
                 </div>
 
                 {/* জন্ম তারিখ ও জাতীয়তা */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">জন্ম তারিখঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.dob || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                      জন্ম তারিখঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.dob || "-"}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-24">জাতীয়তাঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.nationality || 'বাংলাদেশী'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-24">
+                      জাতীয়তাঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.nationality || "বাংলাদেশী"}
+                    </span>
                   </div>
                 </div>
 
                 {/* ধর্ম ও পেশা */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">ধর্মঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.religion || 'ইসলাম'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                      ধর্মঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.religion || "ইসলাম"}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-24">পেশাঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.occupation || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-24">
+                      পেশাঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.occupation || "-"}
+                    </span>
                   </div>
                 </div>
 
                 {/* স্থায়ী ঠিকানাঃ গ্রাম ও ডাকঘর */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">স্থায়ী গ্রামঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.permanentVillage || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                      স্থায়ী গ্রামঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.permanentVillage || "-"}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-24">ডাকঘরঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.permanentPost || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-24">
+                      ডাকঘরঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.permanentPost || "-"}
+                    </span>
                   </div>
                 </div>
 
                 {/* উপজেলা ও জেলা */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">উপজেলাঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.permanentUpazila || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                      উপজেলাঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.permanentUpazila || "-"}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-24">জেলাঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.permanentDistrict || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-24">
+                      জেলাঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.permanentDistrict || "-"}
+                    </span>
                   </div>
                 </div>
 
                 {/* বর্তমান ঠিকানা */}
                 <div className="flex items-baseline gap-2 border-b border-dashed border-slate-300 pb-1">
-                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">বর্তমান ঠিকানাঃ</span>
+                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                    বর্তমান ঠিকানাঃ
+                  </span>
                   <span className="font-medium text-slate-900 flex-1">
-                    {mDetails.currentAddress || mDetails.permanentAddress || '-'}
+                    {mDetails.currentAddress ||
+                      mDetails.permanentAddress ||
+                      "-"}
                   </span>
                 </div>
 
                 {/* লিঙ্গ ও বৈবাহিক অবস্থা */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">লিঙ্গঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.gender || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                      লিঙ্গঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.gender || "-"}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-24">বৈবাহিক অবস্থাঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.maritalStatus || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-24">
+                      বৈবাহিক অবস্থাঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.maritalStatus || "-"}
+                    </span>
                   </div>
                 </div>
 
                 {/* শিক্ষাগত যোগ্যতা ও ই-মেইল */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">শিক্ষাগত যোগ্যতাঃ</span>
-                    <span className="font-medium text-slate-900">{mDetails.education || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                      শিক্ষাগত যোগ্যতাঃ
+                    </span>
+                    <span className="font-medium text-slate-900">
+                      {mDetails.education || "-"}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-24">ই-মেইলঃ</span>
-                    <span className="font-medium text-slate-900 truncate">{member.email || mDetails.email || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-24">
+                      ই-মেইলঃ
+                    </span>
+                    <span className="font-medium text-slate-900 truncate">
+                      {member.email || mDetails.email || "-"}
+                    </span>
                   </div>
                 </div>
 
                 {/* মোবাইল নম্বর ও রক্তের গ্রুপ */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">মোবাইল নাম্বারঃ</span>
-                    <span className="font-bold text-emerald-950 font-mono">{member.phone || mDetails.phone || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                      মোবাইল নাম্বারঃ
+                    </span>
+                    <span className="font-bold text-emerald-950 font-mono">
+                      {member.phone || mDetails.phone || "-"}
+                    </span>
                   </div>
                   <div className="flex items-baseline gap-2">
-                    <span className="font-bold text-slate-900 shrink-0 w-24">রক্তের গ্রুপঃ</span>
-                    <span className="font-bold text-red-700">{mDetails.bloodGroup || '-'}</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-24">
+                      রক্তের গ্রুপঃ
+                    </span>
+                    <span className="font-bold text-red-700">
+                      {mDetails.bloodGroup || "-"}
+                    </span>
                   </div>
                 </div>
 
                 {/* জাতীয় পরিচয়পত্র / জন্ম নিবন্ধন */}
                 <div className="flex items-baseline gap-2 border-b border-dashed border-slate-300 pb-1">
-                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-56">জাতীয় পরিচয়পত্র/জন্ম নিবন্ধনঃ</span>
+                  <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-56">
+                    জাতীয় পরিচয়পত্র/জন্ম নিবন্ধনঃ
+                  </span>
                   <span className="font-bold text-slate-900 font-mono flex-1">
-                    {mDetails.nid || '-'}
+                    {mDetails.nid || "-"}
                   </span>
                 </div>
               </div>
@@ -373,44 +447,70 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
                   {/* নমিনির নাম ও পিতার নাম */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                     <div className="flex items-baseline gap-2">
-                      <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">নমিনির নামঃ</span>
-                      <span className="font-bold text-slate-900">{mDetails.nomineeName || '-'}</span>
+                      <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                        নমিনির নামঃ
+                      </span>
+                      <span className="font-bold text-slate-900">
+                        {mDetails.nomineeName || "-"}
+                      </span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                      <span className="font-bold text-slate-900 shrink-0 w-24">পিতার নামঃ</span>
-                      <span className="font-medium text-slate-900">{mDetails.nomineeFatherName || '-'}</span>
+                      <span className="font-bold text-slate-900 shrink-0 w-24">
+                        পিতার নামঃ
+                      </span>
+                      <span className="font-medium text-slate-900">
+                        {mDetails.nomineeFatherName || "-"}
+                      </span>
                     </div>
                   </div>
 
                   {/* উপজেলা ও জেলা */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                     <div className="flex items-baseline gap-2">
-                      <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">উপজেলাঃ</span>
-                      <span className="font-medium text-slate-900">{mDetails.nomineeUpazila || '-'}</span>
+                      <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                        উপজেলাঃ
+                      </span>
+                      <span className="font-medium text-slate-900">
+                        {mDetails.nomineeUpazila || "-"}
+                      </span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                      <span className="font-bold text-slate-900 shrink-0 w-24">জেলাঃ</span>
-                      <span className="font-medium text-slate-900">{mDetails.nomineeDistrict || '-'}</span>
+                      <span className="font-bold text-slate-900 shrink-0 w-24">
+                        জেলাঃ
+                      </span>
+                      <span className="font-medium text-slate-900">
+                        {mDetails.nomineeDistrict || "-"}
+                      </span>
                     </div>
                   </div>
 
                   {/* সম্পর্ক ও মোবাইল */}
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 border-b border-dashed border-slate-300 pb-1">
                     <div className="flex items-baseline gap-2">
-                      <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">নমিনির সম্পর্কঃ</span>
-                      <span className="font-medium text-slate-900">{mDetails.nomineeRelation || '-'}</span>
+                      <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-32">
+                        নমিনির সম্পর্কঃ
+                      </span>
+                      <span className="font-medium text-slate-900">
+                        {mDetails.nomineeRelation || "-"}
+                      </span>
                     </div>
                     <div className="flex items-baseline gap-2">
-                      <span className="font-bold text-slate-900 shrink-0 w-24">মোবাইলঃ</span>
-                      <span className="font-medium text-slate-900 font-mono">{mDetails.nomineePhone || '-'}</span>
+                      <span className="font-bold text-slate-900 shrink-0 w-24">
+                        মোবাইলঃ
+                      </span>
+                      <span className="font-medium text-slate-900 font-mono">
+                        {mDetails.nomineePhone || "-"}
+                      </span>
                     </div>
                   </div>
 
                   {/* নমিনির NID */}
                   <div className="flex items-baseline gap-2 border-b border-dashed border-slate-300 pb-1">
-                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-56">জাতীয় পরিচয়পত্র/জন্ম নিবন্ধনঃ</span>
+                    <span className="font-bold text-slate-900 shrink-0 w-28 sm:w-56">
+                      জাতীয় পরিচয়পত্র/জন্ম নিবন্ধনঃ
+                    </span>
                     <span className="font-medium text-slate-900 font-mono flex-1">
-                      {mDetails.nomineeNid || '-'}
+                      {mDetails.nomineeNid || "-"}
                     </span>
                   </div>
                 </div>
@@ -422,7 +522,8 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
                   মাসিক সঞ্চয় অঙ্গীকার (টাকা):
                 </span>
                 <div className="font-bold text-emerald-900 text-sm sm:text-base font-sans bg-white px-4 py-1 rounded border border-emerald-300 shadow-xs">
-                  ৳ {Number(monthlyPledgeAmount).toLocaleString()} (টাকা) / প্রতি মাস
+                  ৳ {Number(monthlyPledgeAmount).toLocaleString()} (টাকা) /
+                  প্রতি মাস
                 </div>
               </div>
 
@@ -459,13 +560,17 @@ export const MemberApplicationModal = ({ isOpen, onClose, member }) => {
               <div className="mt-4 pt-3 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2 text-[11px] text-slate-500">
                 <div className="flex items-center gap-1.5 text-emerald-900 font-semibold">
                   <ShieldCheck className="w-4 h-4 text-emerald-700" />
-                  <span>আল-বারাকাহ্ সোসাইটি অফিসিয়াল রেকর্ডভুক্ত মূল আবেদন ফরম</span>
+                  <span>
+                    আল-বারাকাহ্ সোসাইটি অফিসিয়াল রেকর্ডভুক্ত মূল আবেদন ফরম
+                  </span>
                 </div>
                 <div>
-                  মোট জমাকৃত তহবিল: <span className="font-bold text-emerald-900 font-sans">{formatCurrency(member.totalDeposited || 0)}</span>
+                  মোট জমাকৃত তহবিল:{" "}
+                  <span className="font-bold text-emerald-900 font-sans">
+                    {formatCurrency(member.totalDeposited || 0)}
+                  </span>
                 </div>
               </div>
-
             </div>
           </div>
         </div>

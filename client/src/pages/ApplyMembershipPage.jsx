@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   FileText,
   CheckCircle,
@@ -11,11 +11,11 @@ import {
   RefreshCw,
   Download,
   Building,
-} from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import api from '../services/api';
-import { showSuccessAlert, showErrorAlert } from '../utils/alerts';
-import { PhotoUpload } from '../components/common/PhotoUpload';
+} from "lucide-react";
+import { useAuth } from "../context/AuthContext";
+import api from "../services/api";
+import { showSuccessAlert, showErrorAlert } from "../utils/alerts";
+import { PhotoUpload } from "../components/common/PhotoUpload";
 
 export const ApplyMembershipPage = () => {
   const { user, refreshUser, isApproved } = useAuth();
@@ -24,52 +24,57 @@ export const ApplyMembershipPage = () => {
   // Initial form values from existing profile or membership details
   const [formData, setFormData] = useState({
     // Header
-    formNo: user?.membershipDetails?.formNo || `ABS-${Date.now().toString().slice(-6)}`,
+    formNo:
+      user?.membershipDetails?.formNo ||
+      `ABS-${Date.now().toString().slice(-6)}`,
     admissionDate:
       user?.membershipDetails?.admissionDate ||
-      new Date().toISOString().split('T')[0],
-    avatar: user?.avatar || '',
+      new Date().toISOString().split("T")[0],
+    avatar: user?.avatar || "",
 
     // Member Personal Details
-    name: user?.name || '',
-    fatherOrHusbandName: user?.membershipDetails?.fatherOrHusbandName || '',
-    motherName: user?.membershipDetails?.motherName || '',
-    dob: user?.membershipDetails?.dob || '',
-    nationality: user?.membershipDetails?.nationality || 'বাংলাদেশী',
-    religion: user?.membershipDetails?.religion || 'ইসলাম',
-    occupation: user?.membershipDetails?.occupation || '',
-    permanentVillage: user?.membershipDetails?.permanentVillage || '',
-    permanentPost: user?.membershipDetails?.permanentPost || '',
-    permanentUpazila: user?.membershipDetails?.permanentUpazila || '',
-    permanentDistrict: user?.membershipDetails?.permanentDistrict || '',
-    currentAddress: user?.membershipDetails?.currentAddress || '',
-    gender: user?.membershipDetails?.gender || 'পুরুষ',
-    maritalStatus: user?.membershipDetails?.maritalStatus || 'বিবাহিত',
-    education: user?.membershipDetails?.education || '',
-    email: user?.email || '',
-    phone: user?.phone || '',
-    bloodGroup: user?.membershipDetails?.bloodGroup || 'O+',
-    nid: user?.membershipDetails?.nid || '',
+    name: user?.name || "",
+    fatherOrHusbandName: user?.membershipDetails?.fatherOrHusbandName || "",
+    motherName: user?.membershipDetails?.motherName || "",
+    dob: user?.membershipDetails?.dob || "",
+    nationality: user?.membershipDetails?.nationality || "বাংলাদেশী",
+    religion: user?.membershipDetails?.religion || "ইসলাম",
+    occupation: user?.membershipDetails?.occupation || "",
+    permanentVillage: user?.membershipDetails?.permanentVillage || "",
+    permanentPost: user?.membershipDetails?.permanentPost || "",
+    permanentUpazila: user?.membershipDetails?.permanentUpazila || "",
+    permanentDistrict: user?.membershipDetails?.permanentDistrict || "",
+    currentAddress: user?.membershipDetails?.currentAddress || "",
+    gender: user?.membershipDetails?.gender || "পুরুষ",
+    maritalStatus: user?.membershipDetails?.maritalStatus || "বিবাহিত",
+    education: user?.membershipDetails?.education || "",
+    email: user?.email || "",
+    phone: user?.phone || "",
+    bloodGroup: user?.membershipDetails?.bloodGroup || "O+",
+    nid: user?.membershipDetails?.nid || "",
 
     // Nominee Details
-    nomineeName: user?.membershipDetails?.nomineeName || '',
-    nomineeFatherName: user?.membershipDetails?.nomineeFatherName || '',
-    nomineeUpazila: user?.membershipDetails?.nomineeUpazila || '',
-    nomineeDistrict: user?.membershipDetails?.nomineeDistrict || '',
-    nomineeRelation: user?.membershipDetails?.nomineeRelation || '',
-    nomineePhone: user?.membershipDetails?.nomineePhone || '',
-    nomineeNid: user?.membershipDetails?.nomineeNid || '',
+    nomineeName: user?.membershipDetails?.nomineeName || "",
+    nomineeFatherName: user?.membershipDetails?.nomineeFatherName || "",
+    nomineeUpazila: user?.membershipDetails?.nomineeUpazila || "",
+    nomineeDistrict: user?.membershipDetails?.nomineeDistrict || "",
+    nomineeRelation: user?.membershipDetails?.nomineeRelation || "",
+    nomineePhone: user?.membershipDetails?.nomineePhone || "",
+    nomineeNid: user?.membershipDetails?.nomineeNid || "",
 
     // Society Specific
     monthlyPledge: user?.membershipDetails?.monthlyPledge || 1000,
-    joinReason: user?.membershipDetails?.joinReason || 'সমিতির মাধ্যমে হালাল সঞ্চয় ও বরকতময় আর্থিক কল্যাণ',
-    applicantSignature: user?.membershipDetails?.applicantSignature || user?.name || '',
+    joinReason:
+      user?.membershipDetails?.joinReason ||
+      "সমিতির মাধ্যমে হালাল সঞ্চয় ও বরকতময় আর্থিক কল্যাণ",
+    applicantSignature:
+      user?.membershipDetails?.applicantSignature || user?.name || "",
   });
 
   const [loading, setLoading] = useState(false);
   const [checking, setChecking] = useState(false);
-  const [error, setError] = useState('');
-  const [successMsg, setSuccessMsg] = useState('');
+  const [error, setError] = useState("");
+  const [successMsg, setSuccessMsg] = useState("");
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,50 +87,52 @@ export const ApplyMembershipPage = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setError('');
-    setSuccessMsg('');
+    setError("");
+    setSuccessMsg("");
 
     if (!formData.name.trim()) {
-      setError('অনুগ্রহ করে প্রার্থীর নাম প্রদান করুন');
+      setError("অনুগ্রহ করে প্রার্থীর নাম প্রদান করুন");
       return;
     }
     if (!formData.fatherOrHusbandName.trim()) {
-      setError('অনুগ্রহ করে পিতা / স্বামীর নাম প্রদান করুন');
+      setError("অনুগ্রহ করে পিতা / স্বামীর নাম প্রদান করুন");
       return;
     }
     if (!formData.phone.trim()) {
-      setError('অনুগ্রহ করে মোবাইল নম্বর প্রদান করুন');
+      setError("অনুগ্রহ করে মোবাইল নম্বর প্রদান করুন");
       return;
     }
     if (!formData.nid.trim()) {
-      setError('অনুগ্রহ করে আবেদনকারীর জাতীয় পরিচয়পত্র / জন্ম নিবন্ধন নং প্রদান করুন');
+      setError(
+        "অনুগ্রহ করে আবেদনকারীর জাতীয় পরিচয়পত্র / জন্ম নিবন্ধন নং প্রদান করুন",
+      );
       return;
     }
     if (!formData.nomineeName.trim()) {
-      setError('অনুগ্রহ করে মনোনীত নমিনির নাম প্রদান করুন');
+      setError("অনুগ্রহ করে মনোনীত নমিনির নাম প্রদান করুন");
       return;
     }
 
     try {
       setLoading(true);
-      const res = await api.post('/users/apply-membership', formData);
+      const res = await api.post("/users/apply-membership", formData);
       if (res.data.success) {
         setSuccessMsg(res.data.message);
         await showSuccessAlert(
-          'আবেদন সফলভাবে দাখিল হয়েছে!',
-          'আপনার ভর্তি ফরমটি সফলভাবে জমা হয়েছে। অ্যাডমিন অনুমোদনের পর সম্পূর্ণ সেবা পাবেন।'
+          "আবেদন সফলভাবে দাখিল হয়েছে!",
+          "আপনার ভর্তি ফরমটি সফলভাবে জমা হয়েছে। অ্যাডমিন অনুমোদনের পর সম্পূর্ণ সেবা পাবেন।",
         );
         await refreshUser();
       } else {
         setError(res.data.message);
-        showErrorAlert('ব্যর্থ হয়েছে', res.data.message);
+        showErrorAlert("ব্যর্থ হয়েছে", res.data.message);
       }
     } catch (err) {
       const msg =
         err.response?.data?.message ||
-        'আবেদন জমা করতে ব্যর্থ হয়েছে। অনুগ্রহ করে পুনরায় চেষ্টা করুন।';
+        "আবেদন জমা করতে ব্যর্থ হয়েছে। অনুগ্রহ করে পুনরায় চেষ্টা করুন।";
       setError(msg);
-      showErrorAlert('ব্যর্থ হয়েছে', msg);
+      showErrorAlert("ব্যর্থ হয়েছে", msg);
     } finally {
       setLoading(false);
     }
@@ -169,14 +176,16 @@ export const ApplyMembershipPage = () => {
             <span>প্রিন্ট / PDF</span>
           </button>
 
-          {user?.status === 'pending' && (
+          {user?.status === "pending" && (
             <button
               type="button"
               onClick={handleCheckStatus}
               disabled={checking}
               className="flex items-center gap-1.5 px-3.5 py-2 bg-amber-50 hover:bg-amber-100 text-amber-900 font-semibold text-xs rounded-[6px] transition-all border border-amber-300"
             >
-              <RefreshCw className={`w-3.5 h-3.5 ${checking ? 'animate-spin' : ''}`} />
+              <RefreshCw
+                className={`w-3.5 h-3.5 ${checking ? "animate-spin" : ""}`}
+              />
               <span>স্ট্যাটাস রিফ্রেশ</span>
             </button>
           )}
@@ -193,18 +202,19 @@ export const ApplyMembershipPage = () => {
                 অভিনন্দন, {user?.name}! আপনি অনুমোদিত সদস্য।
               </p>
               <p className="text-emerald-800">
-                আপনার ফরমের তথ্য নিচে প্রদর্শিত হচ্ছে। প্রয়োজনে আপনি প্রিন্ট কপি সংগ্রহ করে রাখতে পারেন।
+                আপনার ফরমের তথ্য নিচে প্রদর্শিত হচ্ছে। প্রয়োজনে আপনি প্রিন্ট
+                কপি সংগ্রহ করে রাখতে পারেন।
               </p>
             </div>
           </div>
           <button
-            onClick={() => navigate('/dashboard')}
+            onClick={() => navigate("/dashboard")}
             className="px-4 py-2 bg-emerald-900 text-white rounded-[6px] font-bold text-xs hover:bg-emerald-950 transition-all shrink-0"
           >
             ড্যাশবোর্ডে যান
           </button>
         </div>
-      ) : user?.status === 'pending' ? (
+      ) : user?.status === "pending" ? (
         <div className="print:hidden p-4 bg-amber-50 rounded-[6px] border border-amber-300 text-xs text-amber-950 flex items-center gap-3">
           <Clock className="w-6 h-6 text-amber-700 shrink-0" />
           <div>
@@ -212,7 +222,8 @@ export const ApplyMembershipPage = () => {
               আপনার ভর্তি আবেদন পর্যালোচনায় রয়েছে (Pending Approval)
             </p>
             <p className="text-amber-800 mt-0.5">
-              অ্যাডমিন যাচাই করার পর আপনার সদস্যপদ অনুমোদন করা হবে। নিচে আপনার দাখিলকৃত তথ্যাদি দেখতে পাচ্ছেন।
+              অ্যাডমিন যাচাই করার পর আপনার সদস্যপদ অনুমোদন করা হবে। নিচে আপনার
+              দাখিলকৃত তথ্যাদি দেখতে পাচ্ছেন।
             </p>
           </div>
         </div>
@@ -240,7 +251,6 @@ export const ApplyMembershipPage = () => {
       */}
       <form onSubmit={handleSubmit} className="print:m-0 print:p-0">
         <div className="bg-white border-2 border-emerald-950 rounded-none sm:rounded-[4px] shadow-md relative overflow-hidden text-slate-900 print:border-none print:shadow-none">
-          
           {/* Subtle Authentic Background Watermark */}
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none opacity-[0.035] select-none z-0">
             <div className="flex flex-col items-center text-center">
@@ -259,7 +269,6 @@ export const ApplyMembershipPage = () => {
           </div>
 
           <div className="relative z-10 p-3 sm:p-6 md:p-8 space-y-4">
-            
             {/* 
               ------------------------------------------------------------------
               1. HEADER SECTION (Cream Top Banner + Logo + Title + Photo Box)
@@ -295,10 +304,10 @@ export const ApplyMembershipPage = () => {
                   </div>
 
                   <p className="text-xs sm:text-sm font-bold text-slate-800">
-                    ঘড়িশার, নড়িয়া, শরীয়তপুর
+                    ঘড়িষার, নড়িয়া, শরীয়তপুর
                   </p>
                   <p className="text-[11px] sm:text-xs font-semibold text-slate-700">
-                    স্থাপিতঃ ২০২৩ ইং
+                    স্থাপিতঃ ২০২৬ ইং
                   </p>
                 </div>
 
@@ -364,7 +373,6 @@ export const ApplyMembershipPage = () => {
               ------------------------------------------------------------------
             */}
             <div className="space-y-3 pt-1 text-xs sm:text-sm">
-              
               {/* নামঃ */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2">
                 <label className="font-bold text-slate-900 shrink-0 sm:w-28">
@@ -691,7 +699,8 @@ export const ApplyMembershipPage = () => {
               {/* আবেদনকারীর জাতীয় পরিচয়পত্র / জন্ম নিবন্ধন নং */}
               <div className="flex flex-col sm:flex-row sm:items-center gap-1 sm:gap-2 pt-1">
                 <label className="font-bold text-slate-900 shrink-0 sm:w-56 text-xs sm:text-sm">
-                  জাতীয় পরিচয়পত্র/জন্ম নিবন্ধনঃ <span className="text-red-600">*</span>
+                  জাতীয় পরিচয়পত্র/জন্ম নিবন্ধনঃ{" "}
+                  <span className="text-red-600">*</span>
                 </label>
                 <div className="flex-1 border-b border-dashed border-slate-500 focus-within:border-emerald-800">
                   <input
@@ -893,11 +902,10 @@ export const ApplyMembershipPage = () => {
                   আবেদনকারীর স্বাক্ষর এবং তারিখ
                 </div>
                 <span className="text-[10px] font-semibold text-emerald-900 mt-0.5 font-mono">
-                  {formData.name || 'স্বাক্ষরিত'} ({formData.admissionDate})
+                  {formData.name || "স্বাক্ষরিত"} ({formData.admissionDate})
                 </span>
               </div>
             </div>
-
           </div>
         </div>
 
@@ -922,7 +930,7 @@ export const ApplyMembershipPage = () => {
               disabled={loading}
               className="w-full sm:w-auto px-7 py-3 rounded-[6px] bg-emerald-900 hover:bg-emerald-950 text-gold-300 font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-md disabled:opacity-50"
             >
-              <span>{loading ? 'আবেদন জমা হচ্ছে...' : 'আবেদন জমা'}</span>
+              <span>{loading ? "আবেদন জমা হচ্ছে..." : "আবেদন জমা"}</span>
               <ArrowRight className="w-4 h-4 text-gold-400" />
             </button>
           )}

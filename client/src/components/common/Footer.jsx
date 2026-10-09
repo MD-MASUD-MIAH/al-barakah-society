@@ -45,6 +45,8 @@ export const Footer = () => {
             <p className="text-gold-300 font-semibold flex items-center justify-center sm:justify-end gap-1">
               <Phone className="w-3 h-3 text-gold-400" />
               <span>01752803726</span>
+               <Phone className="w-3 h-3 text-gold-400" />
+              <span>01914945093</span>
             </p>
             <p className="mt-0.5">
               © {new Date().getFullYear()} Al-Barakah Society. All rights reserved.
